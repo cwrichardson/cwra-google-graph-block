@@ -108,10 +108,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('jsforwp/callout-block', {
-  title: 'Callout Block',
-  icon: 'megaphone',
-  category: 'common',
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('cwra-google-graph-block/graph-block', {
+  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Google Graph Block', "cwra-google-graph-block"),
+  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Display a graph using the Google Graph API', "cwra-google-graph-block"),
+  icon: 'chart-bar',
+  category: 'widgets',
+  keywords: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Google Graph', "cwra-google-graph-block"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('graph', "cwra-google-graph-block")],
+  example: {},
   attributes: {
     content: {
       source: 'html',
