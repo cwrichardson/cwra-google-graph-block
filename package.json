@@ -1,0 +1,30 @@
+{
+  "name": "cwra-google-graph-block",
+  "version": "1.0.0",
+  "description": "Adds a Guttenberg block for displaying Google Graphs in WordPress",
+  "main": "index.js",
+  "scripts": {
+    "build": "wp-scripts build admin/src/index.js --output=admin/block/js/cwra-google-graph-block-admin.js",
+    "start": "wp-scripts start admin/src/index.js --output=admin/block/js/cwra-google-graph-block-admin.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cwrichardson/cwra-google-graph-block.git"
+  },
+  "keywords": [
+    "WordPress",
+    "Guttenberg",
+    "Google",
+    "Graph"
+  ],
+  "author": "Chris Richardson",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/cwrichardson/cwra-google-graph-block/issues"
+  },
+  "homepage": "https://cwrichardson.com/open-source/cwra-google-graph-block#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "^12.2.1"
+  }
+}
