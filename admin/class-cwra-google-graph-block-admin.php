@@ -109,17 +109,20 @@ class CWRA_Google_Graph_Block_Admin {
 	}
 
 	/**
-	 * Register the JavaScript for the admin area.
+	 * Register the JavaScript for the block editor in the admin area.
 	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_gutenberg_scripts() {
+		$asset_file = include( plugin_dir_path( __FILE__ )
+		    . 'block/js/cwra-google-graph-block-admin.asset.php');
+
 		wp_enqueue_script( $this->plugin_name,
 		    plugin_dir_url( __FILE__ )
-		        . 'block/js/cwra-google-graph-block-gutenberg.js',
-		    array(),
+		        . 'block/js/cwra-google-graph-block-admin.js',
+		    $asset_file['dependencies'],
 		    $this->date_version(
-		        'block/js/cwra-google-graph-block-gutenberg.js'),
+		        'block/js/cwra-google-graph-block-admin.js'),
 		    false );
 	}
 
