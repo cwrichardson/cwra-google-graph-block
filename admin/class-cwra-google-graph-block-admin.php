@@ -41,16 +41,33 @@ class CWRA_Google_Graph_Block_Admin {
 	private $version;
 
 	/**
+	 * Debugger
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      CWRA_Google_Graph_Block_Debug    $debugger   Debugger
+	 *     instantiation.
+	 */
+	private $debugger;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param    string    $plugin_name    The name of this plugin.
+	 * @param    string    $version   The version of this plugin.
+	 * @param    string    $version   The version of this plugin.
+	 * @param    CWRA_Google_Graph_Block_Public    $plugin_public    The
+	 *     instance of the class that handles public-facing activities.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $plugin_public,
+	    $debugger) {
 
+		$this->debugger = $debugger;
+		$this->debugger->debug('Admin initiated');
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		$this->plugin_public = $plugin_public;
 
 	}
 
@@ -117,13 +134,23 @@ class CWRA_Google_Graph_Block_Admin {
 		$asset_file = include( plugin_dir_path( __FILE__ )
 		    . 'block/js/cwra-google-graph-block-admin.asset.php');
 
-		wp_enqueue_script( $this->plugin_name,
+		// register the compiled JS for the backend
+		wp_register_script( $this->plugin_name . '-block-edit',
 		    plugin_dir_url( __FILE__ )
 		        . 'block/js/cwra-google-graph-block-admin.js',
 		    $asset_file['dependencies'],
 		    $this->date_version(
-		        'block/js/cwra-google-graph-block-admin.js'),
-		    false );
+		        'block/js/cwra-google-graph-block-admin.js'));
+
+		$this->debugger->debug("Registering block type.");
+		$this->debugger->debug("plugin_public is ");
+		$this->debugger->debug( $this->plugin_public );
+		register_block_type( 'cwra-google-graph-block/graph-block',
+		    array(
+		        'editor_script' => $this->plugin_name . '-block-edit',
+			'render_callback' => array( $this->plugin_public,
+			    'render')
+		) );
 	}
 
 }

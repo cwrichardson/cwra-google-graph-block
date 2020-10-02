@@ -1,3 +1,38 @@
+// Load the Visualization API and the corechart package.
+google.charts.load('current', {'packages':['corechart']});
+
+// Set a callback to run when the Google Visualization API is loaded.
+google.charts.setOnLoadCallback(initializeData);
+
+// Query a CSV for the data
+function initializeData() {
+	var opts = {sendMethod: 'auto',
+	csvColumns: ['string', 'number', 'number'],
+	csvHasHeader: true};
+	var query = new google.visualization.Query('/test/testy.csv',
+	    opts);
+
+	// Send the query with a callback function.
+	query.send(handleQueryResponse);
+}
+
+// when we get a response, draw the chart
+function handleQueryResponse(response) {
+
+	if (response.isError()) {
+		alert('Error in query: '
+		    + response.getMessage()
+		    + ' '
+		    + response.getDetailedMessage());
+		return;
+	}
+
+	var data = response.getDataTable();
+	var chart = new google.visualization.PieChart(
+	    document.getElementById('chart_div'));
+	chart.draw(data, {width: 400, height: 240, is3D: true});
+}
+
 (function( $ ) {
 	'use strict';
 

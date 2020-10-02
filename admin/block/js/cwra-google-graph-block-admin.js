@@ -95,96 +95,27 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/editor */ "@wordpress/editor");
 /* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_editor__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
 
-
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('cwra-google-graph-block/graph-block', {
-  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Google Graph Block', "cwra-google-graph-block"),
-  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Display a graph using the Google Graph API', "cwra-google-graph-block"),
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('cwra-google-graph-block/graph-block', {
+  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Google Graph Block', "cwra-google-graph-block"),
+  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Display a graph using the Google Graph API', "cwra-google-graph-block"),
   icon: 'chart-bar',
   category: 'widgets',
-  keywords: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Google Graph', "cwra-google-graph-block"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('graph', "cwra-google-graph-block")],
+  keywords: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Google Graph', "cwra-google-graph-block"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('graph', "cwra-google-graph-block")],
   example: {},
-  attributes: {
-    content: {
-      source: 'html',
-      selector: 'h2'
-    },
-    backgroundColor: {
-      type: 'string',
-      default: '#900900'
-    },
-    textColor: {
-      type: 'string',
-      default: '#ffffff'
-    }
-  },
-  edit: function edit(props) {
-    var _props$attributes = props.attributes,
-        backgroundColor = _props$attributes.backgroundColor,
-        textColor = _props$attributes.textColor,
-        content = _props$attributes.content,
-        setAttributes = props.setAttributes,
-        className = props.className;
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_editor__WEBPACK_IMPORTED_MODULE_3__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_editor__WEBPACK_IMPORTED_MODULE_3__["PanelColorSettings"], {
-      title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Color Settings", "jsforwp"),
-      colorSettings: [{
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Background Color", "jsforwp"),
-        value: backgroundColor,
-        onChange: function onChange(newBackgroundColor) {
-          setAttributes({
-            backgroundColor: newBackgroundColor
-          });
-        }
-      }, {
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Text Color", "jsforwp"),
-        value: textColor,
-        onChange: function onChange(newColor) {
-          setAttributes({
-            textColor: newColor
-          });
-        }
-      }]
-    })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_editor__WEBPACK_IMPORTED_MODULE_3__["RichText"], {
-      tagName: "h2",
-      className: className,
-      value: content,
-      style: {
-        backgroundColor: backgroundColor,
-        color: textColor
-      },
-      onChange: function onChange(newContent) {
-        setAttributes({
-          content: newContent
-        });
-      }
-    }));
-  },
-  save: function save(props) {
-    var _props$attributes2 = props.attributes,
-        backgroundColor = _props$attributes2.backgroundColor,
-        textColor = _props$attributes2.textColor,
-        content = _props$attributes2.content,
-        className = props.className;
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_editor__WEBPACK_IMPORTED_MODULE_3__["RichText"].Content, {
-      tagName: "h2",
-      className: className,
-      value: content,
-      style: {
-        backgroundColor: backgroundColor,
-        color: textColor
-      }
-    });
+  edit: function edit() {
+    return 'Nothing to see here';
   }
 });
 

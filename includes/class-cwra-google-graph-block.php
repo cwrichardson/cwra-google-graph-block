@@ -60,6 +60,28 @@ class CWRA_Google_Graph_Block {
 	protected $version;
 
 	/**
+	 * The instance of the public facing class; responsible for rendering
+	 * the output of the gutenberg block.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      CWRA_Google_Graph_Block_Public $plugin_public   The
+	 *     public-facing class. Needs to be passed to the admin class, so
+	 *     that the block can register the generation function.
+	 */
+	protected $plugin_public;
+
+	/**
+	 * Plugin debugger
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      CWRA_Google_Graph_Block_Debug $debugger   A collection
+	 *     of debugging tools.
+	 */
+	protected $debugger;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be
@@ -77,10 +99,24 @@ class CWRA_Google_Graph_Block {
 		}
 		$this->plugin_name = 'cwra-google-graph-block';
 
+		// normally this is all handled by the loader, but we want
+		// debugging very early
+		require_once plugin_dir_path( dirname( __FILE__ ) )
+		    . 'includes/class-cwra-google-graph-block-debug.php';
+		$this->debugger = new CWRA_Google_Graph_Block_Debug();
+
+		/*
+		 * XXX cwr: not currenty outputting to screen, so we don't
+		 * need this.
+		add_action('wp_enqueue_scripts', array( $this, 
+		    'enqueue_debug_style'), 9);
+		 */
+
 		$this->load_dependencies();
 		$this->set_locale();
-		$this->define_admin_hooks();
+		// need public to come first as it gets passed in admin
 		$this->define_public_hooks();
+		$this->define_admin_hooks();
 
 	}
 
@@ -134,7 +170,8 @@ class CWRA_Google_Graph_Block {
 		require_once plugin_dir_path( dirname( __FILE__ ) )
 		    . 'public/class-cwra-google-graph-block-public.php';
 
-		$this->loader = new CWRA_Google_Graph_Block_Loader();
+		$this->loader = new CWRA_Google_Graph_Block_Loader( 
+		    $this->debugger );
 
 	}
 
@@ -149,7 +186,8 @@ class CWRA_Google_Graph_Block {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new CWRA_Google_Graph_Block_i18n();
+		$plugin_i18n = new CWRA_Google_Graph_Block_i18n(
+		    $this->debugger );
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n,
 		    'load_plugin_textdomain' );
@@ -166,7 +204,8 @@ class CWRA_Google_Graph_Block {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new CWRA_Google_Graph_Block_Admin(
-		    $this->get_plugin_name(), $this->get_version() );
+		    $this->get_plugin_name(), $this->get_version(),
+		    $this->get_public(), $this->debugger );
 
 		// general admin functionality for the plugin
 		$this->loader->add_action( 'admin_enqueue_scripts',
@@ -176,8 +215,8 @@ class CWRA_Google_Graph_Block {
 
 		// gutenberg editor specific functionality
 		$this->loader->add_action( 'enqueue_block_editor_assets',
-		    $plugin_admin, 'enqueue_gutenberg_scripts' );
-		$this->loader->add_action( 'enqueue_block_editor_assets',
+		    $plugin_admin, 'enqueue_gutenberg_styles' );
+		$this->loader->add_action( 'init',
 		    $plugin_admin, 'enqueue_gutenberg_scripts' );
 
 	}
@@ -191,15 +230,39 @@ class CWRA_Google_Graph_Block {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new CWRA_Google_Graph_Block_Public(
-		    $this->get_plugin_name(), $this->get_version() );
+		$this->plugin_public = new CWRA_Google_Graph_Block_Public(
+		    $this->get_plugin_name(), $this->get_version(),
+		    $this->debugger );
 
 		$this->loader->add_action( 'wp_enqueue_scripts',
-		    $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts',
-		    $plugin_public, 'enqueue_scripts' );
+		    $this->plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'init',
+		    $this->plugin_public, 'enqueue_scripts' );
 
 	}
+
+	/**
+	 * The reference to the class that handles the front-end.
+	 *
+	 * @since     1.0.0
+	 * @return    CWRA_Google_Graph_Block_Public    Handles public-facing
+	 *     functionality
+	 */
+	protected function get_public() {
+		return $this->plugin_public;
+	}
+
+	/*
+	 * XXX cwr: comment this out for the moment, as we're not outputting
+	 * to screen, only to log, so we don't need styles yet.
+	 *
+	public function enqueue_debug_style() {
+		wp_enqueue_style( $this->plugin_name . '-debug',
+		    plugin_dir_url( __FILE__ )
+		    . '../public/css/cwra-google-graph-block-debug.css',
+		    array(), $this->version, 'all' );
+	}
+	*/
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.

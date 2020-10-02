@@ -24,6 +24,16 @@
 class CWRA_Google_Graph_Block_Loader {
 
 	/**
+	 * Debugger
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      CWRA_Google_Graph_Block_Debug    $debugger   Debugger
+	 *     instantiation.
+	 */
+	private $debugger;
+
+	/**
 	 * The array of actions registered with WordPress.
 	 *
 	 * @since    1.0.0
@@ -48,8 +58,9 @@ class CWRA_Google_Graph_Block_Loader {
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct() {
+	public function __construct( $debugger ) {
 
+		$this->debugger = $debugger;
 		$this->actions = array();
 		$this->filters = array();
 
