@@ -3,14 +3,14 @@
 /**
  *
  * @link              https://www.chrisrichardson.info
- * @since             1.0.0
+ * @since             0.99.1
  * @package           CWRA_Google_Graph_Block
  *
  * @wordpress-plugin
  * Plugin Name:       Google Graph Block
  * Plugin URI:        https://www.cwrichardson.com/open-source/cwra-google-graph-block
  * Description:       A Gutenberg block for the Google Graph API
- * Version:           1.0.0
+ * Version:           0.99.1
  * Author:            Chris Richardson
  * Author URI:        https://www.chrisrichardson.info
  * License:           GPL-2.0+
@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Current plugin version.
  */
-define( 'CWRA_GOOGLE_GRAPH_BLOCK_VERSION', '1.0.0' );
+define( 'CWRA_GOOGLE_GRAPH_BLOCK_VERSION', '0.99.1' );
 
 /**
  * The code that runs during plugin activation.
@@ -68,7 +68,7 @@ require plugin_dir_path( __FILE__ )
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    0.99.1
  */
 function run_cwra_google_graph_block() {
 

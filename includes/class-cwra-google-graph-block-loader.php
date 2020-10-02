@@ -4,7 +4,7 @@
  * Register all actions and filters for the plugin
  *
  * @link       https://www.chrisrichardson.info
- * @since      1.0.0
+ * @since      0.99.1
  *
  * @package    CWRA_Google_Graph_Block
  * @subpackage CWRA_Google_Graph_Block/includes
@@ -26,7 +26,7 @@ class CWRA_Google_Graph_Block_Loader {
 	/**
 	 * Debugger
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   private
 	 * @var      CWRA_Google_Graph_Block_Debug    $debugger   Debugger
 	 *     instantiation.
@@ -36,7 +36,7 @@ class CWRA_Google_Graph_Block_Loader {
 	/**
 	 * The array of actions registered with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   protected
 	 * @var      array    $actions    The actions registered with WordPress
 	 *     to fire when the plugin loads.
@@ -46,7 +46,7 @@ class CWRA_Google_Graph_Block_Loader {
 	/**
 	 * The array of filters registered with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   protected
 	 * @var      array    $filters    The filters registered with WordPress
 	 *     to fire when the plugin loads.
@@ -56,7 +56,7 @@ class CWRA_Google_Graph_Block_Loader {
 	/**
 	 * Initialize the collections used to maintain the actions and filters.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 */
 	public function __construct( $debugger ) {
 
@@ -69,7 +69,7 @@ class CWRA_Google_Graph_Block_Loader {
 	/**
 	 * Add a new action to the collection to be registered with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @param    string	$hook		The name of the WordPress
 	 *     action that is being registered.
 	 * @param    object	$component	A reference to the instance of
@@ -90,7 +90,7 @@ class CWRA_Google_Graph_Block_Loader {
 	/**
 	 * Add a new filter to the collection to be registered with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @param    string	$hook	The name of the WordPress filter that
 	 *     is being registered.
 	 * @param    object	$component	A reference to the instance of
@@ -112,7 +112,7 @@ class CWRA_Google_Graph_Block_Loader {
 	 * A utility function that is used to register the actions and hooks
 	 * into a single collection.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   private
 	 * @param    array	$hooks		The collection of hooks that is
 	 *     being registered (that is, actions or filters).
@@ -147,7 +147,7 @@ class CWRA_Google_Graph_Block_Loader {
 	/**
 	 * Register the filters and actions with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 */
 	public function run() {
 

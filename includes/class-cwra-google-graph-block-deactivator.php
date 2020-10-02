@@ -4,7 +4,7 @@
  * Fired during plugin deactivation
  *
  * @link       https://www.chrisrichardson.info
- * @since      1.0.0
+ * @since      0.99.1
  *
  * @package    Cwra_Google_Graph_Block
  * @subpackage Cwra_Google_Graph_Block/includes
@@ -15,7 +15,7 @@
  *
  * This class defines all code necessary to run during the plugin's deactivation.
  *
- * @since      1.0.0
+ * @since      0.99.1
  * @package    Cwra_Google_Graph_Block
  * @subpackage Cwra_Google_Graph_Block/includes
  * @author     Chris Richardson <cwr@cwrichardson.com>
@@ -27,7 +27,7 @@ class Cwra_Google_Graph_Block_Deactivator {
 	 *
 	 * Long Description.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 */
 	public static function deactivate() {
 

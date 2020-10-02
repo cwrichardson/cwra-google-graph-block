@@ -7,7 +7,7 @@
  * to output debugging information
  *
  * @link       https://www.chrisrichardson.info
- * @since      1.0.0
+ * @since      0.99.1
  *
  * @package    CWRA_Google_Graph_Block
  * @subpackage CWRA_Google_Graph_Block/includes
@@ -18,7 +18,7 @@
  *
  * This is used to define debugging functions.
  *
- * @since      1.0.0
+ * @since      0.99.1
  * @package    CWRA_Google_Graph_Block
  * @subpackage CWRA_Google_Graph_Block/includes
  * @author     Chris Richardson <cwr@cwrichardson.com>
@@ -29,7 +29,7 @@ class CWRA_Google_Graph_Block_Debug {
 	/**
 	 * Are we debugging?
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   protected
 	 * @var      bool    $enabled    Whether debugging is enabled or not
 	 *
@@ -39,7 +39,7 @@ class CWRA_Google_Graph_Block_Debug {
 	/**
 	 * Fire up debugging!
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 */
 	public function __construct() {
 		// conditionally load the debugging code
@@ -53,7 +53,7 @@ class CWRA_Google_Graph_Block_Debug {
 	/**
 	 * Output debugging info
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   public
 	 */
 	public function debug( $code ) {
@@ -69,7 +69,7 @@ class CWRA_Google_Graph_Block_Debug {
 	/**
 	 * Pretty print debugging to screen.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   private
 	 */
 	private function print_html( $code ) {
@@ -91,7 +91,7 @@ class CWRA_Google_Graph_Block_Debug {
 	/**
 	 * Output to php log
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   private
 	 */
 	private function print_log( $code ) {

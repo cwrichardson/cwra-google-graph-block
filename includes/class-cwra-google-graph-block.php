@@ -7,7 +7,7 @@
  * across both the public-facing side of the site and the admin area.
  *
  * @link       https://www.chrisrichardson.info
- * @since      1.0.0
+ * @since      0.99.1
  *
  * @package    CWRA_Google_Graph_Block
  * @subpackage CWRA_Google_Graph_Block/includes
@@ -22,7 +22,7 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      0.99.1
  * @package    CWRA_Google_Graph_Block
  * @subpackage CWRA_Google_Graph_Block/includes
  * @author     Chris Richardson <cwr@cwrichardson.com>
@@ -33,7 +33,7 @@ class CWRA_Google_Graph_Block {
 	 * The loader that's responsible for maintaining and
 	 * registering all hooks that power the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   protected
 	 * @var      CWRA_Google_Graph_Block_Loader    $loader    Maintains and
 	 *     registers all hooks for the plugin.
@@ -43,7 +43,7 @@ class CWRA_Google_Graph_Block {
 	/**
 	 * The unique identifier of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   protected
 	 * @var      string    $plugin_name    The string used to uniquely
 	 *     identify this plugin.
@@ -53,7 +53,7 @@ class CWRA_Google_Graph_Block {
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
@@ -63,7 +63,7 @@ class CWRA_Google_Graph_Block {
 	 * The instance of the public facing class; responsible for rendering
 	 * the output of the gutenberg block.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   protected
 	 * @var      CWRA_Google_Graph_Block_Public $plugin_public   The
 	 *     public-facing class. Needs to be passed to the admin class, so
@@ -74,7 +74,7 @@ class CWRA_Google_Graph_Block {
 	/**
 	 * Plugin debugger
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   protected
 	 * @var      CWRA_Google_Graph_Block_Debug $debugger   A collection
 	 *     of debugging tools.
@@ -89,13 +89,13 @@ class CWRA_Google_Graph_Block {
 	 * the locale, and set the hooks for the admin area and the
 	 * public-facing side of the site.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 */
 	public function __construct() {
 		if ( defined( 'CWRA_GOOGLE_GRAPH_BLOCK_VERSION' ) ) {
 			$this->version = CWRA_GOOGLE_GRAPH_BLOCK_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '0.99.1';
 		}
 		$this->plugin_name = 'cwra-google-graph-block';
 
@@ -137,7 +137,7 @@ class CWRA_Google_Graph_Block {
 	 * Create an instance of the loader which will be used to register the
 	 * hooks with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   private
 	 */
 	private function load_dependencies() {
@@ -181,7 +181,7 @@ class CWRA_Google_Graph_Block {
 	 * Uses the CWRA_Google_Graph_Block_i18n class in order to set the
 	 * domain and to register the hook with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   private
 	 */
 	private function set_locale() {
@@ -198,7 +198,7 @@ class CWRA_Google_Graph_Block {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
@@ -225,7 +225,7 @@ class CWRA_Google_Graph_Block {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   private
 	 */
 	private function define_public_hooks() {
@@ -244,7 +244,7 @@ class CWRA_Google_Graph_Block {
 	/**
 	 * The reference to the class that handles the front-end.
 	 *
-	 * @since     1.0.0
+	 * @since     0.99.1
 	 * @return    CWRA_Google_Graph_Block_Public    Handles public-facing
 	 *     functionality
 	 */
@@ -267,7 +267,7 @@ class CWRA_Google_Graph_Block {
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 */
 	public function run() {
 		$this->loader->run();
@@ -278,7 +278,7 @@ class CWRA_Google_Graph_Block {
 	 * within the context of WordPress and to define internationalization
 	 * functionality.
 	 *
-	 * @since     1.0.0
+	 * @since     0.99.1
 	 * @return    string    The name of the plugin.
 	 */
 	public function get_plugin_name() {
@@ -289,7 +289,7 @@ class CWRA_Google_Graph_Block {
 	 * The reference to the class that orchestrates the hooks
 	 * with the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.99.1
 	 * @return    CWRA_Google_Graph_Block_Loader    Orchestrates the hooks
 	 *     of the plugin.
 	 */
@@ -300,7 +300,7 @@ class CWRA_Google_Graph_Block {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.99.1
 	 * @return    string    The version number of the plugin.
 	 */
 	public function get_version() {

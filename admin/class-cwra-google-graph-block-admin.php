@@ -4,7 +4,7 @@
  * The admin-specific functionality of the plugin.
  *
  * @link       https://www.chrisrichardson.info
- * @since      1.0.0
+ * @since      0.99.1
  *
  * @package    CWRA_Google_Graph_Block
  * @subpackage CWRA_Google_Graph_Block/admin
@@ -25,7 +25,7 @@ class CWRA_Google_Graph_Block_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   private
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
@@ -34,7 +34,7 @@ class CWRA_Google_Graph_Block_Admin {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
@@ -43,7 +43,7 @@ class CWRA_Google_Graph_Block_Admin {
 	/**
 	 * Debugger
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @access   private
 	 * @var      CWRA_Google_Graph_Block_Debug    $debugger   Debugger
 	 *     instantiation.
@@ -53,7 +53,7 @@ class CWRA_Google_Graph_Block_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 * @param    string    $plugin_name    The name of this plugin.
 	 * @param    string    $version   The version of this plugin.
 	 * @param    string    $version   The version of this plugin.
@@ -83,7 +83,7 @@ class CWRA_Google_Graph_Block_Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 */
 	public function enqueue_styles() {
 		wp_enqueue_style( $this->plugin_name,
@@ -98,7 +98,7 @@ class CWRA_Google_Graph_Block_Admin {
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script( $this->plugin_name,
@@ -113,7 +113,7 @@ class CWRA_Google_Graph_Block_Admin {
 	/**
 	 * Register the stylesheets for the block editor.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 */
 	public function enqueue_gutenberg_styles() {
 		wp_enqueue_style( $this->plugin_name,
@@ -128,7 +128,7 @@ class CWRA_Google_Graph_Block_Admin {
 	/**
 	 * Register the JavaScript for the block editor in the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    0.99.1
 	 */
 	public function enqueue_gutenberg_scripts() {
 		$asset_file = include( plugin_dir_path( __FILE__ )
