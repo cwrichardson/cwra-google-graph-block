@@ -86,6 +86,60 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./admin/src/block.json":
+/*!******************************!*\
+  !*** ./admin/src/block.json ***!
+  \******************************/
+/*! exports provided: apiVersion, name, category, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"apiVersion\":2,\"name\":\"cwra-google-graph-block/graph-block\",\"category\":\"widgets\"}");
+
+/***/ }),
+
+/***/ "./admin/src/edit.js":
+/*!***************************!*\
+  !*** ./admin/src/edit.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Edit; });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+function Edit(props) {
+  var cwraggDataSource = props.attributes.cwraggDataSource,
+      setAttributes = props.setAttributes;
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["TextControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Data URL '),
+    help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Enter the URL from which to get ' + 'a CSV file with the data for the graph.'),
+    value: cwraggDataSource,
+    onChange: function onChange(value) {
+      return setAttributes({
+        cwraggDataSource: value
+      });
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: "it_worked"
+  }, "Generating graph from", cwraggDataSource));
+}
+
+/***/ }),
+
 /***/ "./admin/src/index.js":
 /*!****************************!*\
   !*** ./admin/src/index.js ***!
@@ -99,25 +153,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/editor */ "@wordpress/editor");
-/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_editor__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./admin/src/edit.js");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./admin/src/block.json");
+var _block_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./block.json */ "./admin/src/block.json", 1);
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
 
 
 
-
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('cwra-google-graph-block/graph-block', {
-  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Google Graph Block', "cwra-google-graph-block"),
-  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Display a graph using the Google Graph API', "cwra-google-graph-block"),
+var name = _block_json__WEBPACK_IMPORTED_MODULE_3__.name;
+var settings = {
+  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Google Graph Block', 'cwra-google-graph-block'),
+  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Display a graph using the Google Graph API', 'cwra-google-graph-block'),
+  keywords: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["_x"])('graph', 'block keywords', 'cwra-google-graph-block'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["_x"])('chart', 'block keywords', 'cwra-google-graph-block')],
   icon: 'chart-bar',
   category: 'widgets',
-  keywords: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Google Graph', "cwra-google-graph-block"), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('graph', "cwra-google-graph-block")],
-  example: {},
-  edit: function edit() {
-    return 'Nothing to see here';
-  }
-});
+  attributes: {
+    cwraggDataSource: {
+      type: 'string'
+    }
+  },
+  example: {
+    attributes: {
+      cwragg_datasource: 'Nothing to see here'
+    }
+  },
+  edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"]
+};
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])(name, settings);
 
 /***/ }),
 
@@ -132,14 +201,14 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('cwr
 
 /***/ }),
 
-/***/ "@wordpress/editor":
-/*!*****************************************!*\
-  !*** external {"this":["wp","editor"]} ***!
-  \*****************************************/
+/***/ "@wordpress/components":
+/*!*********************************************!*\
+  !*** external {"this":["wp","components"]} ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-(function() { module.exports = this["wp"]["editor"]; }());
+(function() { module.exports = this["wp"]["components"]; }());
 
 /***/ }),
 
