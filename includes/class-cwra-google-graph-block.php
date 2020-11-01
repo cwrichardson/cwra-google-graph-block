@@ -133,6 +133,8 @@ class CWRA_Google_Graph_Block {
 	 *   area.
 	 * - CWRA_Google_Graph_Block_Public. Defines all hooks for the public
 	 *   side of the site.
+	 * - CWRA_Google_Graph_Block_Data. Defines all hooks for handling
+	 *   the data used by Google Graph.
 	 *
 	 * Create an instance of the loader which will be used to register the
 	 * hooks with WordPress.
@@ -155,6 +157,12 @@ class CWRA_Google_Graph_Block {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) )
 		    . 'includes/class-cwra-google-graph-block-i18n.php';
+
+		/**
+		 * The class responsible for handling data management.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) )
+		    . 'includes/class-cwra-google-graph-block-data.php';
 
 		/**
 		 * The class responsible for defining all actions that occur

@@ -6,8 +6,8 @@
  * @link       https://www.chrisrichardson.info
  * @since      0.99.1
  *
- * @package    Cwra_Google_Graph_Block
- * @subpackage Cwra_Google_Graph_Block/includes
+ * @package    CWRA_Google_Graph_Block
+ * @subpackage CWRA_Google_Graph_Block/includes
  */
 
 /**
@@ -16,21 +16,28 @@
  * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      0.99.1
- * @package    Cwra_Google_Graph_Block
- * @subpackage Cwra_Google_Graph_Block/includes
+ * @package    CWRA_Google_Graph_Block
+ * @subpackage CWRA_Google_Graph_Block/includes
  * @author     Chris Richardson <cwr@cwrichardson.com>
  */
-class Cwra_Google_Graph_Block_Activator {
+class CWRA_Google_Graph_Block_Activator {
 
 	/**
-	 * Short Description. (use period)
+	 * Activate the plugin.
 	 *
 	 * Long Description.
 	 *
 	 * @since    0.99.1
 	 */
 	public static function activate() {
+		if ( ! current_user_can( 'activate_plugins' ) ) return;
 
+		$plugin = isset( $_REQUEST['plugin'] )
+		    ? $_REQUEST['plugin'] : '';
+
+		$dm = new CWRA_Google_Graph_Block_Data();
+
+		$dm->make_data_dir();
 	}
 
 }
