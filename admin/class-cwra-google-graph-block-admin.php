@@ -147,6 +147,18 @@ class CWRA_Google_Graph_Block_Admin {
 		$this->debugger->debug( $this->plugin_public );
 		register_block_type( 'cwra-google-graph-block/graph-block',
 		    array(
+		        'attributes' => array(
+			    'cwraggDataSourceType' => array(
+			        'type' => 'string',
+				'default' => 'json'
+			    ),
+			    'cwraggDataSource' => array (
+			        'type' => 'string'
+			    ),
+			    'cwraggLocalFile' => array (
+			        'type' => 'string'
+			    )
+			),
 		        'editor_script' => $this->plugin_name . '-block-edit',
 			'render_callback' => array( $this->plugin_public,
 			    'render')
