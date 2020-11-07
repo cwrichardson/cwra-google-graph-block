@@ -135,6 +135,8 @@ class CWRA_Google_Graph_Block {
 	 *   side of the site.
 	 * - CWRA_Google_Graph_Block_Data. Defines all hooks for handling
 	 *   the data used by Google Graph.
+	 * - CWRA_Google_Graph_Block_API. Initialize and register the
+	 *   plugin specific RESTful API routes and endpoints.
 	 *
 	 * Create an instance of the loader which will be used to register the
 	 * hooks with WordPress.
@@ -170,6 +172,13 @@ class CWRA_Google_Graph_Block {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) )
 		    . 'admin/class-cwra-google-graph-block-admin.php';
+
+		/**
+		 * The class responsible for defining all actions that occur
+		 * in the admin area.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) )
+		    . 'admin/class-cwra-google-graph-block-api.php';
 
 		/**
 		 * The class responsible for defining all actions that occur
@@ -226,6 +235,13 @@ class CWRA_Google_Graph_Block {
 		    $plugin_admin, 'enqueue_gutenberg_styles' );
 		$this->loader->add_action( 'init',
 		    $plugin_admin, 'enqueue_gutenberg_scripts' );
+
+		// RESTful API
+		$plugin_api = new CWRA_Google_Graph_Block_API(
+		    $this->get_plugin_name(), $this->get_version(),
+		    $this->debugger);
+		$this->loader->add_action( 'rest_api_init',
+		    $plugin_api, 'rest_init' );
 
 	}
 
