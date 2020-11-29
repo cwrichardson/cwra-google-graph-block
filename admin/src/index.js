@@ -23,6 +23,12 @@ const settings = {
     attributes: {
     	cwraggDataSource: {
 		type: 'string'
+	},
+    	cwraggDataSourceType: {
+		type: 'string'
+	},
+    	cwraggLocalFile: {
+		type: 'string'
 	}
     },
     example: {
