@@ -25,6 +25,6 @@
   },
   "homepage": "https://cwrichardson.com/open-source/cwra-google-graph-block#readme",
   "devDependencies": {
-    "@wordpress/scripts": "^12.2.1"
+    "@wordpress/scripts": "^12.5.0"
   }
 }
