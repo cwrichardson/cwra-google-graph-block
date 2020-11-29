@@ -110,10 +110,11 @@ class CWRA_Google_Graph_Block_API {
 		if ( $upload_dir['error'] ) {
 			return new WP_Error( 'upload_dir_problem',
 			    __('There was a problem detecting the upload dir.',
-			    'cwra_google_graph_block') );
+			    'cwraggb') );
 		} else {
 			$upload_dir = trailingslashit($upload_dir['basedir'])
-			    . 'cwra-google-graph-block';
+			    . 'cwraggb';
+			wp_mkdir_p($upload_dir);
 		}
 
 		$save_name = wp_unique_filename($upload_dir, $tmp_file);
