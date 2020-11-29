@@ -125,6 +125,8 @@ class CWRA_Google_Graph_Block_Public {
 		return sprintf(
 		    '<div class="cwraggbp" data-cwraggbp-src="'
 		    . print_r($block_attributes["cwraggLocalFile"], true)
+		    . '" data-cwraggbp-type="'
+		    . print_r($block_attributes["cwraggChartType"], true)
 		    . '"></div>'
 		);
 	}

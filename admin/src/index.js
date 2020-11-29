@@ -21,8 +21,13 @@ const settings = {
     icon: 'chart-bar',
     category: 'widgets',
     attributes: {
+    	cwraggChartType: {
+		type: 'string',
+		default: 'line'
+	},
     	cwraggDataSource: {
-		type: 'string'
+		type: 'string',
+		default: 'remote-csv'
 	},
     	cwraggDataSourceType: {
 		type: 'string'

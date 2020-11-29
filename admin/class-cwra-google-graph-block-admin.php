@@ -148,6 +148,10 @@ class CWRA_Google_Graph_Block_Admin {
 		register_block_type( 'cwra-google-graph-block/graph-block',
 		    array(
 		        'attributes' => array(
+			    'cwraggChartType' => array(
+			        'type' => 'string',
+				'default' => 'line'
+			    ),
 			    'cwraggDataSourceType' => array(
 			        'type' => 'string',
 				'default' => 'remote-csv'

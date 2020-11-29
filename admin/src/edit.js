@@ -20,8 +20,12 @@ import { Fragment, useState } from '@wordpress/element';
 
 export default function CwraGoolgeGraphEdit( props ) {
 	const {
-		attributes: { cwraggDataSourceType, cwraggDataSource,
-		    cwraggLocalFile },
+		attributes: {
+		    cwraggChartType,
+		    cwraggDataSourceType,
+		    cwraggDataSource,
+		    cwraggLocalFile
+		},
 		setAttributes,
 	} = props;
 
@@ -91,6 +95,24 @@ export default function CwraGoolgeGraphEdit( props ) {
 		</InspectorControls>
 	    </Fragment>
 	    <Fragment>
+		<div className={ "graph_settings" }>
+		    <SelectControl
+		      label={ __( 'Chart Type', 'cwraggb') }
+		      value={ cwraggChartType }
+		      options={[
+		          { label: __( 'Area', 'cwraggb' ), value: 'area' },
+		          { label: __( 'Bar', 'cwraggb' ), value: 'bar' },
+		          { label: __( 'Column', 'cwraggb' ), value: 'column' },
+		          { label: __( 'Line', 'cwraggb' ), value: 'line' },
+		          { label: __( 'Pie', 'cwraggb' ), value: 'pie' },
+		          { label: __( 'Scatter', 'cwraggb' ),
+			      value: 'scatter' }
+		      ]}
+		      onChange={ (chartType) => {
+		      	setAttributes( {
+			  cwraggChartType: chartType } )
+		      }} />
+		</div>
 		<div className={ "it_worked" }>Generating graph from 
 		  { cwraggDataSource }</div>
 		<div>Local data source is { cwraggLocalFile }</div>
