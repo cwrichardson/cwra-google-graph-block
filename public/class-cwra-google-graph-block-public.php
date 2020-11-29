@@ -96,12 +96,18 @@ class CWRA_Google_Graph_Block_Public {
 	 */
 	public function enqueue_scripts() {
 
-		wp_enqueue_script( $this->plugin_name,
+		wp_enqueue_script( $this->plugin_name . '-public',
 		    plugin_dir_url( __FILE__ )
 		        . 'js/cwra-google-graph-block-public.js',
 		    array( $this->plugin_name . 'googlecharts', 'jquery' ),
 		    $this->date_version(
 		        'js/cwra-google-graph-block-public.js'), false );
+		wp_localize_script( $this->plugin_name . '-public',
+		    'cwraggbp',
+		    array(
+		    	'contentdir' => wp_upload_dir()['baseurl']
+			    . '/cwraggb'
+		    ));
 
 		wp_enqueue_script( $this->plugin_name . 'googlecharts',
 		    'https://www.gstatic.com/charts/loader.js',
@@ -117,7 +123,9 @@ class CWRA_Google_Graph_Block_Public {
 	public function render( $block_attributes, $content = '' ) {
 		$this->debugger->debug('Outputting to public.');
 		return sprintf(
-		    '<div id="chart_div"></div>'
+		    '<div class="cwraggbp" data-cwraggbp-src="'
+		    . print_r($block_attributes["cwraggLocalFile"], true)
+		    . '"></div>'
 		);
 	}
 
