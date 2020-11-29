@@ -150,7 +150,7 @@ class CWRA_Google_Graph_Block_Admin {
 		        'attributes' => array(
 			    'cwraggDataSourceType' => array(
 			        'type' => 'string',
-				'default' => 'json'
+				'default' => 'remote-csv'
 			    ),
 			    'cwraggDataSource' => array (
 			        'type' => 'string'
