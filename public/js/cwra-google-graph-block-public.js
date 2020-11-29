@@ -6,19 +6,29 @@ google.charts.setOnLoadCallback(initializeData);
 
 // Query a CSV for the data
 function initializeData() {
-	var opts = {sendMethod: 'auto',
-	csvColumns: ['string', 'number', 'number'],
-	csvHasHeader: true};
-	var query = new google.visualization.Query('/test/testy.csv',
-	    opts);
+	let cwraggbgraphs = document.getElementsByClassName("cwraggbp");
 
-	// Send the query with a callback function.
-	query.send(handleQueryResponse);
+	for (let i = 0; i < cwraggbgraphs.length; i++) {
+		let cwraggbgraph = cwraggbgraphs.item(i);
+
+		let opts = {sendMethod: 'auto',
+			csvColumns: ['string', 'number', 'number'],
+			csvHasHeader: true};
+		let query = new google.visualization.Query(
+		    cwraggbp.contentdir + '/'
+		        + cwraggbgraph.dataset.cwraggbpSrc,
+		    opts);
+
+		// Use an "in between" anonymous function, so we can pass
+		// more than just the callback function
+		query.send(function (response) {
+			handleQueryResponse(response, cwraggbgraph);
+		});
+	}
 }
 
 // when we get a response, draw the chart
-function handleQueryResponse(response) {
-
+function handleQueryResponse(response, graph) {
 	if (response.isError()) {
 		alert('Error in query: '
 		    + response.getMessage()
@@ -27,9 +37,8 @@ function handleQueryResponse(response) {
 		return;
 	}
 
-	var data = response.getDataTable();
-	var chart = new google.visualization.PieChart(
-	    document.getElementById('chart_div'));
+	let data = response.getDataTable();
+	let chart = new google.visualization.PieChart(graph);
 	chart.draw(data, {width: 400, height: 240, is3D: true});
 }
 

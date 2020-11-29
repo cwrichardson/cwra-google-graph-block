@@ -2,99 +2,99 @@
  * WordPress dependencies
  */
 
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-import { Button, TextControl, SelectControl } from '@wordpress/components';
-import { withState } from '@wordpress/compose';
+import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
+import {
+	InspectorControls,
+	URLInput,
+	useBlockProps } from '@wordpress/block-editor';
+import {
+	Button,
+	PanelBody,
+	PanelRow,
+	TextControl,
+	SelectControl,
+	Spinner} from '@wordpress/components';
+import { useDispatch } from '@wordpress/data';
+import { Fragment, useState } from '@wordpress/element';
 
-export default function Edit( props ) {
+export default function CwraGoolgeGraphEdit( props ) {
 	const {
 		attributes: { cwraggDataSourceType, cwraggDataSource,
 		    cwraggLocalFile },
 		setAttributes,
 	} = props;
 
-	let default_dst = 'remote-csv';
-	let is_valid = true;
-	let validating = false;
-
+	const { createErrorNotice } = useDispatch( 'core/notices' );
+	const [ isValidating, setIsValidating ] = useState( false );
 	const post_id = wp.data.select("core/editor").getCurrentPostId();
+	console.log('Post ID is ', post_id);
 
-	const DataSrcSelectControl = withState( {
-		dataSourceType: cwraggDataSourceType
-	} )( ( { dataSourceType, setState } ) => (
-		<SelectControl
-		    label="Data Source"
-		    value={ dataSourceType }
-		    options={ [
-		        { label: 'Remote CSV', value: 'remote-csv' },
-		        { label: 'Remote JSON', value: 'remote-json' },
-		        { label: 'Upload CSV', value: 'upload-csv' },
-		        { label: 'Upload JSON', value: 'upload-json' }
-		    ] }
-		    onChange={ ( dataSourceType ) => {
-		        setState( { dataSourceType } );
-			setAttributes( { 
-			    cwraggDataSourceType: dataSourceType } ) } }
-		/>
-	) );
+	function validate() {
+		setIsValidating( true );
 
-	const DataSrcTextControl = withState( {
-		dataSource: cwraggDataSource
-	} )( ( { dataSource, setState } ) => (
-		<TextControl
-		    label={ __( 'Data URL', 'cwra-google-graph-block' ) }
-		    help={ __( 'Enter the URL from which to get '
-		      + 'a JSON file with the data for the graph.',
-		      'cwra-google-graph-block') }
-		    value={ dataSource }
-		    onChange={ (dataSource) => {
-			setState( { dataSource } );
-		    	setAttributes( { cwraggDataSource: dataSource } );
-		    }} />
-	) );
-
-	const DataButton = ( ) => {
-		return (<Button
-		    isPrimary
-		    onClick={ doValidate }>{ __("Validate", 
-		        'cwra-google-graph-block')}</Button>);
-	}
-
-	const doValidate = ( ) => {
-		let dst = cwraggDataSourceType;
-		if ( !dst ) {
-			dst = default_dst;
-		}
-		console.log('Doing validation');
 		apiFetch( {
 		    path: '/cwraggb/v1/setremotedatasrc',
 		    method: 'POST',
 		    data: { 'url': cwraggDataSource,
-		    	    'type': cwraggDataSourceType,
+		    	    'type': 'remote-csv',
 			    'postId': post_id } } 
 		).then( ( localFileName ) => {
-			setAttributes( {
-			    cwraggLocalFile: localFileName
-			    } );
-			return localFileName;
+			console.log('API returned ', localFileName);
+			setAttributes( { cwraggLocalFile: localFileName } );
+			console.log('Got local file name ', localFileName);
+			console.log('cwraggLocalFile is ', cwraggLocalFile);
 		}).catch( ( error ) => {
-			console.log('doh!');
+			console.log('doh!', error);
+			createErrorNotice(
+				sprintf(
+				    __( 'Could not validate data source. %s' ),
+				    error.message),
+				{
+					id: 'cwragg-validate-error',
+					type: 'snackbar'
+				}
+			);
+		}).finally( () => {
+			setIsValidating( false );
 		});
-	};
+	}
 
 	return (
+	  <>
 	    <Fragment>
-		<div>
-		    <DataSrcSelectControl />
-		    <DataButton />
-		</div>
-		<div>
-	            <DataSrcTextControl />
-		</div>
+	    	<InspectorControls>
+		    <PanelBody
+		      title={__( 'Data Configuration' )}
+		      initialOpen={ true }>
+		    	<PanelRow>
+			    <TextControl
+			      label={ __( 'Data URL', 'cwraggb' ) }
+			      help={ __( 'Enter the URL from which to get '
+			        + 'the data.', 'cwraggb') }
+			      value={ cwraggDataSource }
+			      onChange={ (newDataSource) => {
+				setAttributes( {
+				  cwraggDataSource: newDataSource } )
+			      }} />
+			</PanelRow>
+			<PanelRow>
+			    <Button
+			      onClick={ validate }
+			      label={ __( 'Retrieve', 'cwraggb') }
+			      aria-disabled={ isValidating }
+			      disabled={ isValidating }
+			      isPrimary>Retrieve</Button>
+			    { isValidating && <Spinner /> }
+			</PanelRow>
+		    </PanelBody>
+		</InspectorControls>
+	    </Fragment>
+	    <Fragment>
 		<div className={ "it_worked" }>Generating graph from 
 		  { cwraggDataSource }</div>
+		<div>Local data source is { cwraggLocalFile }</div>
 	    </Fragment>
+	  </>
 	);
 }
