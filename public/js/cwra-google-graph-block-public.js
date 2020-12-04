@@ -19,8 +19,6 @@ function initializeData() {
 		        + graph.dataset.cwraggbpSrc,
 		    opts);
 
-		console.log("Useing query ", query);
-
 		// Use an "in between" anonymous function, so we can pass
 		// more than just the callback function
 		query.send(function (response) {
@@ -29,11 +27,37 @@ function initializeData() {
 	}
 }
 
+// what can we configure for this kind of chart?
+function getOptions( type ) {
+	const MAIN = { 'BackgroundColor': 'backgroundColor',
+	    'ChartArea': 'chartArea', 
+	    'EnableInteractivity': 'enableInteractivity',
+	    'FontName': 'fontName', 'ForcelFrame': 'forcelFrame',
+	    'Height': 'height', 'Legend': 'legend', 'TextStyle': 'textStyle',
+	    'Title': 'title', 'Width': 'width' };
+	const LINE = {};
+	const PIE = {};
+
+	options = {...MAIN};
+	console.log("Main options are ", options);
+	switch ( type ) {
+	    case 'line':
+	    	options = {...options, ...LINE};
+		break;
+	    case 'pie':
+	    	options = {...options, ...PIE};
+		break;
+	}
+	console.log("Options are now ", options);
+
+	return options;
+}
+
 // when we get a response, draw the chart
 function handleQueryResponse(response, graph) {
 	let chart;
-	console.log("Got response ", response);
-	console.log("for graph ", graph);
+	let options = {}
+	let config = {};
 
 	if (response.isError()) {
 		alert('Error in query: '
@@ -44,7 +68,6 @@ function handleQueryResponse(response, graph) {
 	}
 
 	let data = response.getDataTable();
-	console.log("Drawing chart of type ", graph.dataset.cwraggbpType);
 	switch ( graph.dataset.cwraggbpType ) {
 	    case 'area':
 		chart = new google.visualization.AreaChart(graph);
@@ -65,7 +88,21 @@ function handleQueryResponse(response, graph) {
 	    default:
 		chart = new google.visualization.LineChart(graph);
 	}
-	chart.draw(data, {width: 400, height: 240, is3D: true});
+	options = getOptions(graph.dataset.cwraggbpType);
+	console.log("Returned options ", options);
+	for (const key in options) {
+		console.log("Checking for ", key);
+		console.log("got ", graph.dataset['cwraggbp' + key]);
+		console.log("with ", 'cwraggbp' + key);
+		if (graph.dataset['cwraggbp' + key]) {
+			console.log("Got one!");
+			config = {...config,
+			    [options[key]]: graph.dataset['cwraggbp' + key] };
+			console.log("So now config is", config);
+		}
+	}
+	console.log("Calculated config as ", config);
+	chart.draw(data, config);
 }
 
 (function( $ ) {
