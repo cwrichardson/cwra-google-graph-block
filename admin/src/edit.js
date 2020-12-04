@@ -4,11 +4,8 @@
 
 import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { InspectorControls } from '@wordpress/block-editor';
 import {
 	Button,
-	PanelBody,
-	PanelRow,
 	TextControl,
 	ToggleControl,
 	SelectControl,
@@ -20,60 +17,7 @@ import { Fragment, useCallback, useState } from '@wordpress/element';
  * Internal dependencies
  */
 import { CHART_TYPES } from './constants';
-
-function ChartEdit( { title = '', userCanEdit = false, chartType,
-    setAttributes } ) {
-
-	function setTextAttr ( attr, value ) {
-		setAttributes( { [ attr ]: value } );
-	}
-
-	function onSetTitle ( value ) {
-		setTextAttr('cwraggTitle', value);
-	}
-
-	function onSetHAxisTitle ( value ) {
-		return;
-		/*( setTextAttr('cwraggHAxisTitle', value);*/
-	}
-
-	function onSetVAxisTitle ( value ) {
-		return;
-		/*setTextAttr('cwraggHAxisTitle', value);*/
-	}
-
-	return (
-	    <>
-		<div>
-			<TextControl
-			    label={ __( 'Title', 'cwraggb' ) }
-			    value={ title || '' }
-			    onChange={ onSetTitle }
-			/>
-			<TextControl
-			    label={ __( 'Horizontal Axis Title', 'cwraggb' ) }
-			    value={ /*cwraggHAxisTitle || ''*/ '' }
-			    onChange={ onSetHAxisTitle }
-			/>
-			<TextControl
-			    label={ __( 'Vertical Axis Title', 'cwraggb' ) }
-			    value={ /*cwraggVvAxisTitle || ''*/ '' }
-			    onChange={ onSetVAxisTitle }
-			/>
-			<ToggleControl
-			    label={ __( 'Allow user interaction', 'cwraggb' ) }
-			    help={ userCanEdit
-			        ? __( 'Google visualization controls enabled.',
-				    'cwraggb' )
-				: __( 'Google visualization controls disabled.',
-				    'cwraggb' ) }
-			    checked={ userCanEdit }
-			    onChange={ () => setAttributes( { cwraggUserCanEdit:
-			        ! userCanEdit } ) } />
-		</div>
-	    </>
-	);
-}
+import * as chartLib from './chart';
 
 export default function CwraGoolgeGraphEdit( props ) {
 	const {
@@ -87,11 +31,36 @@ export default function CwraGoolgeGraphEdit( props ) {
 		},
 		setAttributes,
 	} = props;
+	const attributes = props.attributes;
 
 	const { createErrorNotice } = useDispatch( 'core/notices' );
 	const [ isValidating, setIsValidating ] = useState( false );
 	const post_id = wp.data.select("core/editor").getCurrentPostId();
 	console.log('Post ID is ', post_id);
+
+	let chart = {};
+	/*
+	chart = new chartLib.LineChart( { attributes, setAttributes } );
+	*/
+	switch ( cwraggChartType ) {
+	    case 'line':
+		chart = new chartLib.LineChart( { attributes, setAttributes } );
+		break;
+	    case 'pie':
+		chart = new chartLib.PieChart( { attributes, setAttributes } );
+		break;
+	    default:
+		createErrorNotice(
+			sprintf(
+			    __( 'Unknown chart type: %s. %s',
+				'cwraggb' ), cwraggChartType, error.message),
+			{
+				id: 'cwragg-instantiate-error',
+				type: 'snackbar'
+			}
+		);
+	}
+
 
 	// fill out the key-value pairs for the select chart-type dropdown
 	let chartSelectType = [];
@@ -103,6 +72,47 @@ export default function CwraGoolgeGraphEdit( props ) {
 		}
 	}
 
+	/*
+	function GetInspectorControls() {
+		switch ( cwraggChartType ) {
+			    <>
+			    <PanelRow>
+				<TextControl
+				    label={ __( 'Vertical Axis Title', 'cwraggb' ) }
+				    value={ cwraggVvAxisTitle || '' }
+				    onChange={ onSetVAxisTitle }
+				/>
+			    </PanelRow>
+			    </>
+
+			    ToggleControl example 
+			    return (
+				<>
+				<ToggleControl
+				    label={ __( 'Allow user interaction', 'cwraggb' ) }
+				    help={ userCanEdit
+					? __( 'Google visualization controls enabled.',
+					    'cwraggb' )
+					: __( 'Google visualization controls disabled.',
+					    'cwraggb' ) }
+				    checked={ userCanEdit }
+				    onChange={ () => setAttributes( { cwraggUserCanEdit:
+					! userCanEdit } ) } />
+				</>
+			    );
+
+		    case 'line':
+			chart = new LineChart(cwraggTitle);
+		    	break;
+		    case 'pie':
+			chart = new PieChart(cwraggTitle);
+		    	break;
+		}
+
+		return "<div>" + {chartType} + "</div>";
+	}
+	*/
+
 	function validate() {
 		setIsValidating( true );
 
@@ -113,12 +123,8 @@ export default function CwraGoolgeGraphEdit( props ) {
 		    	    'type': 'remote-csv',
 			    'postId': post_id } } 
 		).then( ( localFileName ) => {
-			console.log('API returned ', localFileName);
 			setAttributes( { cwraggLocalFile: localFileName } );
-			console.log('Got local file name ', localFileName);
-			console.log('cwraggLocalFile is ', cwraggLocalFile);
 		}).catch( ( error ) => {
-			console.log('doh!', error);
 			createErrorNotice(
 				sprintf(
 				    __( 'Could not validate data source. %s',
@@ -133,36 +139,57 @@ export default function CwraGoolgeGraphEdit( props ) {
 		});
 	}
 
+	function ChartEdit( { title = '', userCanEdit = false, chartType,
+	    setAttributes } ) {
+
+		function setTextAttr ( attr, value ) {
+			setAttributes( { [ attr ]: value } );
+		}
+
+		function onSetHAxisTitle ( value ) {
+			return;
+			/*( setTextAttr('cwraggHAxisTitle', value);*/
+		}
+
+		function onSetVAxisTitle ( value ) {
+			return;
+			/*setTextAttr('cwraggHAxisTitle', value);*/
+		}
+
+		return (
+		    <>
+			<div>
+				<div>
+				    <TextControl
+				      label={ __( 'Data URL', 'cwraggb' ) }
+				      help={ __( 'Enter the URL from which to get '
+					+ 'the data.', 'cwraggb') }
+				      value={ cwraggDataSource }
+				      onChange={ (newDataSource) => {
+					setAttributes( {
+					  cwraggDataSource: newDataSource } )
+				      }} />
+				    <Button
+				      onClick={ validate }
+				      label={ __( 'Retrieve', 'cwraggb') }
+				      aria-disabled={ isValidating }
+				      disabled={ isValidating }
+				      isPrimary>Retrieve</Button>
+				    { isValidating && <Spinner /> }
+				</div>
+				<TextControl
+				    label={ __( 'Horizontal Axis Title', 'cwraggb' ) }
+				    value={ /*cwraggHAxisTitle || ''*/ '' }
+				    onChange={ onSetHAxisTitle }
+				/>
+			</div>
+		    </>
+		);
+	}
+
 	return (
 	  <>
-	    <Fragment>
-	    	<InspectorControls>
-		    <PanelBody
-		      title={ __( 'Data Configuration', 'cwraggb' )}
-		      initialOpen={ true }>
-		    	<PanelRow>
-			    <TextControl
-			      label={ __( 'Data URL', 'cwraggb' ) }
-			      help={ __( 'Enter the URL from which to get '
-			        + 'the data.', 'cwraggb') }
-			      value={ cwraggDataSource }
-			      onChange={ (newDataSource) => {
-				setAttributes( {
-				  cwraggDataSource: newDataSource } )
-			      }} />
-			</PanelRow>
-			<PanelRow>
-			    <Button
-			      onClick={ validate }
-			      label={ __( 'Retrieve', 'cwraggb') }
-			      aria-disabled={ isValidating }
-			      disabled={ isValidating }
-			      isPrimary>Retrieve</Button>
-			    { isValidating && <Spinner /> }
-			</PanelRow>
-		    </PanelBody>
-		</InspectorControls>
-	    </Fragment>
+	    { chart.sidebar() }
 	    <Fragment>
 		<div className={ "graph_settings" }>
 		    <SelectControl
@@ -179,9 +206,6 @@ export default function CwraGoolgeGraphEdit( props ) {
 		    userCanEdit={ cwraggUserCanEdit }
 		    chartType={ cwraggChartType }
 		    setAttributes={ setAttributes } />
-		<div className={ "it_worked" }>Generating graph from 
-		  { cwraggDataSource }</div>
-		<div>Local data source is { cwraggLocalFile }</div>
 	    </Fragment>
 	  </>
 	);
