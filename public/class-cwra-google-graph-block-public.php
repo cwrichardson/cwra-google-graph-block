@@ -122,13 +122,36 @@ class CWRA_Google_Graph_Block_Public {
 	 */
 	public function render( $block_attributes, $content = '' ) {
 		$this->debugger->debug('Outputting to public.');
-		return sprintf(
-		    '<div class="cwraggbp" data-cwraggbp-src="'
+
+		$el = '<div class="cwraggbp" data-cwraggbp-src="'
 		    . print_r($block_attributes["cwraggLocalFile"], true)
 		    . '" data-cwraggbp-type="'
 		    . print_r($block_attributes["cwraggChartType"], true)
-		    . '"></div>'
-		);
+		    . '"';
+
+		if ( array_key_exists('cwraggTitle', $block_attributes) ) {
+			$el .= ' data-cwraggbp-title="'
+			    . print_r($block_attributes["cwraggTitle"], true)
+			    . '"';
+		}
+
+		if ( array_key_exists('cwraggHAxisTitle', $block_attributes) ) {
+			$el .= ' data-cwraggbp-haxis-title="'
+			    . print_r($block_attributes["cwraggHAxisTitle"],
+			        true)
+			    . '"';
+		}
+
+		if ( array_key_exists('cwraggVAxisTitle', $block_attributes) ) {
+			$el .= ' data-cwraggbp-vaxis-title="'
+			    . print_r($block_attributes["cwraggVAxisTitle"],
+			        true)
+			    . '"';
+		}
+
+		$el .= '></div>';
+
+		return $el;
 	}
 
 }
