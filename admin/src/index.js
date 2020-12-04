@@ -34,6 +34,9 @@ const settings = {
 	},
     	cwraggLocalFile: {
 		type: 'string'
+	},
+    	cwraggTitle: {
+		type: 'string'
 	}
     },
     example: {

@@ -161,6 +161,9 @@ class CWRA_Google_Graph_Block_Admin {
 			    ),
 			    'cwraggLocalFile' => array (
 			        'type' => 'string'
+			    ),
+			    'cwraggTitle' => array (
+			        'type' => 'string'
 			    )
 			),
 		        'editor_script' => $this->plugin_name . '-block-edit',
