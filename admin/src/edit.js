@@ -22,6 +22,7 @@ import * as chartLib from './chart';
 export default function CwraGoolgeGraphEdit( props ) {
 	const {
 		attributes: {
+		    cwraggBaseId,
 		    cwraggChartType,
 		    cwraggDataSourceType,
 		    cwraggDataSource,
@@ -29,6 +30,7 @@ export default function CwraGoolgeGraphEdit( props ) {
 		    cwraggTitle,
 		    cwraggUserCanEdit
 		},
+		clientId,
 		setAttributes,
 	} = props;
 	const attributes = props.attributes;
@@ -37,6 +39,9 @@ export default function CwraGoolgeGraphEdit( props ) {
 	const [ isValidating, setIsValidating ] = useState( false );
 	const post_id = wp.data.select("core/editor").getCurrentPostId();
 	console.log('Post ID is ', post_id);
+
+	// save the clientId as an attribute so we can use it on public side
+	setAttributes( { cwraggBaseId: clientId } );
 
 	let chart = {};
 	/*
