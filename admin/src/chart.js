@@ -54,12 +54,28 @@ class Chart {
 
 	}
 
+	get height() {
+		return this.cwraggHeight;
+	}
+
+	set height(newHeight) {
+		this.setAttributes( { cwraggHeight: newHeight } );
+	}
+
 	get title() {
 		return this.cwraggTitle;
 	}
 
 	set title(newTitle) {
 		this.setAttributes( { cwraggTitle: newTitle } );
+	}
+
+	get width() {
+		return this.cwraggWidth;
+	}
+
+	set width(newWidth) {
+		this.setAttributes( { cwraggWidth: newWidth } );
 	}
 
 	addMain() {
@@ -75,6 +91,16 @@ class Chart {
 				  label={ __( 'Title', 'cwraggb' ) }
 				  value={ this.title }
 				  onChange={ (value) => this.title = value } />
+			    </PanelRow>
+			    <PanelRow>
+			        <TextControl
+				  label={ __( 'Height', 'cwraggb' ) }
+				  value={ this.height }
+				  onChange={ (value) => this.height = value } />
+			        <TextControl
+				  label={ __( 'Width', 'cwraggb' ) }
+				  value={ this.width }
+				  onChange={ (value) => this.width = value } />
 			    </PanelRow>
 			</PanelBody>
 		));
