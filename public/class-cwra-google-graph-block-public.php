@@ -87,6 +87,11 @@ class CWRA_Google_Graph_Block_Public {
 		        . 'css/cwra-google-graph-block-public.css',
 		    array(), $this->version, 'all' );
 
+		wp_enqueue_style( $this->plugin_name . 'bootstrap',
+		    'https://cdn.jsdelivr.net/npm/bootstrap'
+		        . '@4.5.3/dist/css/bootstrap.min.css',
+		    array(), $this->version, 'all' );
+
 	}
 
 	/**
@@ -123,33 +128,88 @@ class CWRA_Google_Graph_Block_Public {
 	public function render( $block_attributes, $content = '' ) {
 		$this->debugger->debug('Outputting to public.');
 
-		$el = '<div class="cwraggbp" data-cwraggbp-src="'
+		$controlEl = '<div id="'
+		    . print_r($block_attributes["cwraggBaseId"], true)
+		    . '_control_div" style="width: 915px; height: 50px;"'
+		    . ' class="cwraggbp cwraggbp_control '
+		    . ' cwraggbp_chart_column_selector">'
+		    . '</div>';
+
+		$chartEl = '<div id="'
+		    . print_r($block_attributes["cwraggBaseId"], true)
+		    . '" style="width: 915px; height: 300px;" ';
+
+		$chartEl .= 'class="cwraggbp cwraggbp_chart"'
+		    . ' data-cwraggbp-src="'
 		    . print_r($block_attributes["cwraggLocalFile"], true)
 		    . '" data-cwraggbp-type="'
 		    . print_r($block_attributes["cwraggChartType"], true)
 		    . '"';
 
+		if ( array_key_exists('cwraggHeight', $block_attributes) ) {
+			$chartEl .= ' data-cwraggbp-height="'
+			    . print_r($block_attributes["cwraggHeight"], true)
+			    . '"';
+		}
+
+		if ( array_key_exists('cwraggWidth', $block_attributes) ) {
+			$chartEl .= ' data-cwraggbp-width="'
+			    . print_r($block_attributes["cwraggWidth"], true)
+			    . '"';
+		}
+
 		if ( array_key_exists('cwraggTitle', $block_attributes) ) {
-			$el .= ' data-cwraggbp-title="'
+			$chartEl .= ' data-cwraggbp-title="'
 			    . print_r($block_attributes["cwraggTitle"], true)
 			    . '"';
 		}
 
 		if ( array_key_exists('cwraggHAxisTitle', $block_attributes) ) {
-			$el .= ' data-cwraggbp-haxis-title="'
+			$chartEl .= ' data-cwraggbp-haxis-title="'
 			    . print_r($block_attributes["cwraggHAxisTitle"],
 			        true)
 			    . '"';
 		}
 
 		if ( array_key_exists('cwraggVAxisTitle', $block_attributes) ) {
-			$el .= ' data-cwraggbp-vaxis-title="'
+			$chartEl .= ' data-cwraggbp-vaxis-title="'
 			    . print_r($block_attributes["cwraggVAxisTitle"],
 			        true)
 			    . '"';
 		}
 
-		$el .= '></div>';
+		$chartEl .= '></div>';
+
+		$colSelectEl = '<div id="'
+		    . print_r($block_attributes["cwraggBaseId"], true)
+		    . '_col_control_div" style="height: 50px;"'
+		    . ' class="cwraggbp cwraggbp_control cwraggbp_col_control">'
+		    . '</div>';
+
+		$el = '<div id="'
+		    . print_r($block_attributes["cwraggBaseId"], true)
+		    . '_dashboard_div"'
+		    . ' class="cwraggbp cwraggbp_dashboard">'
+		    . '<table class="columns">'
+		    . '<tbody>'
+		    . '<tr>'
+		    . '<td>'
+		    . $colSelectEl
+		    . '</td>'
+		    . '</tr>'
+		    . '<tr>'
+		    . '<td>'
+		    . $chartEl
+		    . '</td'
+		    . '</tr>'
+		    . '<tr>'
+		    . '<td>'
+		    . $controlEl
+		    . '</td>'
+		    . '</tr>'
+		    . '</tbody>'
+		    . '</table>'
+		    . '</div>';
 
 		return $el;
 	}
