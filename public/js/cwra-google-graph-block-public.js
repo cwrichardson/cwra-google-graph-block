@@ -59,6 +59,7 @@ function handleQueryResponse(response, graph) {
 	let chart, chartType = 'LineChart';
 	let options = {}
 	let config = {};
+	let avgDays = 7;
 
 	if (response.isError()) {
 		alert('Error in query: '
@@ -72,6 +73,7 @@ function handleQueryResponse(response, graph) {
 	let dashboardId = baseId + '_dashboard_div';
 	let controlId = baseId + '_control_div';
 	let colControlId = baseId + '_col_control_div';
+	let rangeControlId = baseId + '_range_control_div';
 
 	switch ( graph.dataset.cwraggbpType ) {
 	    case 'area':
@@ -138,32 +140,10 @@ function handleQueryResponse(response, graph) {
 	}
 	console.log("Calculated config as ", config);
 
-	let days = 7;
 	chart = new google.visualization.ChartWrapper({
 	    'chartType': chartType,
 	    'containerId': baseId,
-	    'options': config,
-	    /*
-	    'view': {
-	    	'columns': [0,1, {
-		    type: 'number',
-		    label: days + '-day moving average',
-		    calc: function (dt, row) {
-		    	if (row >= days - 1) {
-			    let total = 0;
-			    for (let i = 0; i < days; i++) {
-			    	total += dt.getValue(row -i, 1);
-			    }
-			    let average = total / days;
-			    return {v: average, f: average.toFixed(2)};
-			} else {
-			    // null for < x days
-			    return null;
-			}
-		    }
-		}]
-	    }
-	    */
+	    'options': config
 	});
 
 	let data = response.getDataTable();
@@ -257,9 +237,49 @@ function handleQueryResponse(response, graph) {
 		// 'this' is reference to checkbox clicked on
 		if ( this.checked ) {
 			viewColumns[this.value] = true;
+			// turn on avg slider if _avg
+			if (this.id.endsWith('_avg') &&
+			    document.getElementById(this.id + '_slider')) {
+			    	document.getElementById(
+				    rangeControlId).style.display = 'initial';
+			} else if (this.id.endsWith('_avg')) {
+				let label = document.createElement('label');
+				let txt = document.createTextNode('Averaging'
+				    + 'Period');
+				label.setAttribute('for', this.id + '_slider');
+				label.appendChild(txt);
+
+				let slider = document.createElement('input');
+				slider.type = 'range';
+				slider.id = this.id + '_slider';
+				slider.setAttribute('class',
+				    'form-control-range');
+				slider.setAttribute('min', '2');
+				slider.setAttribute('max', '21');
+				slider.setAttribute('value', '7');
+				slider.oninput = function () {
+					avgDays = this.value;
+					setChartView();
+					dashboard.draw(view);
+				}
+
+				document.getElementById(
+				    rangeControlId).appendChild(label);
+				document.getElementById(
+				    rangeControlId).appendChild(slider);
+			    	document.getElementById(
+				    rangeControlId).style.display = 'initial';
+			}
 		} else {
 			viewColumns[this.value] = false;
+			// turn off avg slider if _avg
+			if (this.id.endsWith('_avg')) {
+			    	document.getElementById(
+				    rangeControlId).style.display = 'none';
+			}
 		}
+
+		console.log("But avg days ", avgDays);
 
 		setChartView();
 		dashboard.draw(view);
@@ -274,22 +294,23 @@ function handleQueryResponse(response, graph) {
 			if (!key.endsWith("_avg") && viewColumns[key]) {
 				myColumns.push(parseInt(key));
 				if (viewColumns[key + '_avg']) {
+					console.log("AvgDays here ", avgDays);
 					// push the average
 					myColumns.push({
 					    type: 'number',
-					    label: days
+					    label: avgDays
 					      + '-day moving average',
 					    calc: function (dt, row) {
-						if (row >= days - 1) {
+						if (row >= avgDays - 1) {
 							let total = 0;
 							for (let i = 0;
-							  i < days; i++)
+							  i < avgDays; i++)
 							  {
 								total +=
 								    dt.getValue(row -i, 1);
 							}
 							let average =
-							    total / days;
+							    total / avgDays;
 							return {v: average,
 							    f: average.toFixed(2)};
 						} else {

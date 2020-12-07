@@ -183,7 +183,15 @@ class CWRA_Google_Graph_Block_Public {
 		$colSelectEl = '<div id="'
 		    . print_r($block_attributes["cwraggBaseId"], true)
 		    . '_col_control_div" style="height: 50px;"'
-		    . ' class="cwraggbp cwraggbp_control cwraggbp_col_control">'
+		    . ' class="cwraggbp cwraggbp_control cwraggbp_col_control'
+		    . ' form-group">'
+		    . '</div>';
+
+		$rangeSliderEl = '<div id="'
+		    . print_r($block_attributes["cwraggBaseId"], true)
+		    . '_range_control_div" style="height: 50px; display: none;"'
+		    . ' class="cwraggbp cwraggbp_control '
+		    . 'cwraggbp_range_control form-group">'
 		    . '</div>';
 
 		$el = '<div id="'
@@ -193,9 +201,7 @@ class CWRA_Google_Graph_Block_Public {
 		    . '<table class="columns">'
 		    . '<tbody>'
 		    . '<tr>'
-		    . '<td>'
-		    . $colSelectEl
-		    . '</td>'
+		    . '<td>' . $colSelectEl . $rangeSliderEl . '</td>'
 		    . '</tr>'
 		    . '<tr>'
 		    . '<td>'
