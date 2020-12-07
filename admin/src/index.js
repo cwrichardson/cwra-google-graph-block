@@ -21,6 +21,9 @@ const settings = {
     icon: 'chart-bar',
     category: 'widgets',
     attributes: {
+    	cwraggBaseId: {
+		type: 'string',
+	},
     	cwraggChartType: {
 		type: 'string',
 		default: 'line'
@@ -32,11 +35,17 @@ const settings = {
     	cwraggDataSourceType: {
 		type: 'string'
 	},
+    	cwraggHeight: {
+		type: 'number'
+	},
     	cwraggLocalFile: {
 		type: 'string'
 	},
     	cwraggTitle: {
 		type: 'string'
+	},
+    	cwraggWidth: {
+		type: 'number'
 	}
     },
     example: {
