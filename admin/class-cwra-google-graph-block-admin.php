@@ -148,6 +148,10 @@ class CWRA_Google_Graph_Block_Admin {
 		register_block_type( 'cwra-google-graph-block/graph-block',
 		    array(
 		        'attributes' => array(
+			    'cwraggBaseId' => array(
+			        'type' => 'string',
+				'default' => 'myChart'
+			    ),
 			    'cwraggChartType' => array(
 			        'type' => 'string',
 				'default' => 'line'
@@ -159,11 +163,17 @@ class CWRA_Google_Graph_Block_Admin {
 			    'cwraggDataSource' => array (
 			        'type' => 'string'
 			    ),
+			    'cwraggHeight' => array (
+			        'type' => 'number'
+			    ),
 			    'cwraggLocalFile' => array (
 			        'type' => 'string'
 			    ),
 			    'cwraggTitle' => array (
 			        'type' => 'string'
+			    ),
+			    'cwraggWidth' => array (
+			        'type' => 'number'
 			    )
 			),
 		        'editor_script' => $this->plugin_name . '-block-edit',
