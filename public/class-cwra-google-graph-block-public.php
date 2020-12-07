@@ -130,14 +130,14 @@ class CWRA_Google_Graph_Block_Public {
 
 		$controlEl = '<div id="'
 		    . print_r($block_attributes["cwraggBaseId"], true)
-		    . '_control_div" style="width: 915px; height: 50px;"'
+		    . '_control_div" style="width: 100%; height: 50px;"'
 		    . ' class="cwraggbp cwraggbp_control '
 		    . ' cwraggbp_chart_column_selector">'
 		    . '</div>';
 
 		$chartEl = '<div id="'
 		    . print_r($block_attributes["cwraggBaseId"], true)
-		    . '" style="width: 915px; height: 300px;" ';
+		    . '" style="width: 100%; height: 300px;" ';
 
 		$chartEl .= 'class="cwraggbp cwraggbp_chart"'
 		    . ' data-cwraggbp-src="'
@@ -198,23 +198,23 @@ class CWRA_Google_Graph_Block_Public {
 		    . print_r($block_attributes["cwraggBaseId"], true)
 		    . '_dashboard_div"'
 		    . ' class="cwraggbp cwraggbp_dashboard">'
-		    . '<table class="columns">'
-		    . '<tbody>'
-		    . '<tr>'
-		    . '<td>' . $colSelectEl . $rangeSliderEl . '</td>'
-		    . '</tr>'
-		    . '<tr>'
-		    . '<td>'
+		    . '<div class="outer-wrapper">'
+		    . '<div class="chart-body">'
+		    . '<div>'
+		    . '<div>' . $colSelectEl . $rangeSliderEl . '</div>'
+		    . '</div>'
+		    . '<div>'
+		    . '<div>'
 		    . $chartEl
-		    . '</td'
-		    . '</tr>'
-		    . '<tr>'
-		    . '<td>'
+		    . '</div>'
+		    . '</div>'
+		    . '<div>'
+		    . '<div>'
 		    . $controlEl
-		    . '</td>'
-		    . '</tr>'
-		    . '</tbody>'
-		    . '</table>'
+		    . '</div>'
+		    . '</div>'
+		    . '</div>'
+		    . '</div>'
 		    . '</div>';
 
 		return $el;
