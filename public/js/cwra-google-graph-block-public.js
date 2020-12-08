@@ -301,7 +301,7 @@ function handleQueryResponse(response, graph) {
 				sliderParent.style.display = 'initial';
 			} else if (this.id.endsWith('_avg')) {
 				let label = document.createElement('label');
-				let txt = document.createTextNode(this.name +
+				let txt = document.createTextNode("Average" +
 				    ' Period');
 				label.setAttribute('for', this.id + '_slider');
 				label.appendChild(txt);
