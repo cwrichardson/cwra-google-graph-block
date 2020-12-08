@@ -9,12 +9,23 @@ function initializeData() {
 	let graphs = document.getElementsByClassName("cwraggbp_chart");
 
 	for (let i = 0; i < graphs.length; i++) {
+		let opts;
+		let query;
 		let graph = graphs.item(i);
 
-		let opts = {sendMethod: 'auto',
-			csvColumns: ['string', 'number', 'number'],
-			csvHasHeader: true};
-		let query = new google.visualization.Query(
+		// XXX make this based on configuration
+		if (graph.dataset.cwraggbpTitle == "Comparisons") {
+			opts = {sendMethod: 'auto',
+				csvColumns: ['string', 'number', 'number',
+				    'number', 'number'],
+				csvHasHeader: true};
+		} else {
+			opts = {sendMethod: 'auto',
+				csvColumns: ['string', 'number', 'number'],
+				csvHasHeader: true};
+		}
+
+		query = new google.visualization.Query(
 		    cwraggbp.contentdir + '/'
 		        + graph.dataset.cwraggbpSrc,
 		    opts);
@@ -55,6 +66,7 @@ function getOptions( type ) {
 
 // when we get a response, draw the chart
 function handleQueryResponse(response, graph) {
+	let comparison = false;
 	let baseId;
 	let chart, chartType = 'LineChart';
 	let options = {}
@@ -67,6 +79,11 @@ function handleQueryResponse(response, graph) {
 		    + ' '
 		    + response.getDetailedMessage());
 		return;
+	}
+
+	// XXX make this configurable
+	if (graph.dataset.cwraggbpTitle == "Comparisons") {
+		comparison = true;
 	}
 
 	baseId = graph.id;
@@ -90,7 +107,7 @@ function handleQueryResponse(response, graph) {
 		chartType = 'PieChart';
 		break;
 	    case 'scatter':
-		chartType = 'ScatterChart'
+		chartType = 'ScatterChart';
 		break;
 	}
 
@@ -99,6 +116,15 @@ function handleQueryResponse(response, graph) {
 	let defaultColumns = { '1': true };
 	let viewColumns = {};
 	let view;
+
+	if (comparison) {
+		isAverageable = { '5': true,
+		    '6': true,
+		    '7': true,
+		    '8': true }
+		defaultColumns = { '5': true,
+		    '7': true }
+	}
 
 	let dashboard = new google.visualization.Dashboard(
 	    document.getElementById(dashboardId));
@@ -121,7 +147,8 @@ function handleQueryResponse(response, graph) {
 		    'minRangeSize': 86400000
 	    	}
 	    },
-	    'state': {'range': { 'start': new Date(2020, 8, 1), 'end': new Date()}}
+	    'state': {'range': { 'start': new Date(2020, 8, 1),
+	        'end': new Date()}}
 	});
 
 	options = getOptions(graph.dataset.cwraggbpType);
@@ -132,13 +159,14 @@ function handleQueryResponse(response, graph) {
 		}
 	}
 
+	let vAxisConfig = { 'vAxis': {'viewWindow': {'min': 0}} };
+
 	config = {...config,
 	    	'chartArea': {'height': '80%', 'width': '90%'},
 		'hAxis': {'slantedText': false},
-		'vAxis': {'viewWindow': {'min': 0}},
+		...vAxisConfig,
 		'legend': {'position': 'in'}
 	}
-	console.log("Calculated config as ", config);
 
 	chart = new google.visualization.ChartWrapper({
 	    'chartType': chartType,
@@ -149,9 +177,17 @@ function handleQueryResponse(response, graph) {
 	let data = response.getDataTable();
 
 	//rename columns
-	data.setColumnLabel(0, 'Date');
-	data.setColumnLabel(1, 'Incremental');
-	data.setColumnLabel(2, 'Cumulative');
+	if (comparison) {
+		data.setColumnLabel(0, 'Date');
+		data.setColumnLabel(1, 'Cumulative Cases');
+		data.setColumnLabel(2, 'Cumulative Recovered');
+		data.setColumnLabel(3, 'Cumulative Deaths');
+		data.setColumnLabel(4, 'Cumulative Tests');
+	} else {
+		data.setColumnLabel(0, 'Date');
+		data.setColumnLabel(1, 'Incremental');
+		data.setColumnLabel(2, 'Cumulative');
+	}
 
 	/*
 	 * add javascript user controls (not google chart controls)
@@ -161,6 +197,12 @@ function handleQueryResponse(response, graph) {
 	// skip column 0
 	for (let i = 1; i < data.getNumberOfColumns(); i++) {
 		columns.push(data.getColumnLabel(i));
+	}
+	if (comparison) {
+		columns.push("Cases");
+		columns.push("Recovered");
+		columns.push("Deaths");
+		columns.push("Tests");
 	}
 
 	for (let i = 0; i < columns.length; i++) {
@@ -234,18 +276,33 @@ function handleQueryResponse(response, graph) {
 	}
 
 	function toggleView() {
+		let sliderWrapper = document.getElementById(rangeControlId);
+		let sliderParent;
+
+		if (!comparison) {
+			sliderParent = sliderWrapper;
+		} else {
+			let newDiv = document.getElementById(this.id
+			    + '_slider_div');
+			if (newDiv == null) {
+				newDiv = document.createElement('div');
+				newDiv.setAttribute('id', this.id +
+				    '_slider_div');
+			}
+			sliderParent = newDiv;
+		}
+
 		// 'this' is reference to checkbox clicked on
 		if ( this.checked ) {
 			viewColumns[this.value] = true;
 			// turn on avg slider if _avg
 			if (this.id.endsWith('_avg') &&
 			    document.getElementById(this.id + '_slider')) {
-			    	document.getElementById(
-				    rangeControlId).style.display = 'initial';
+				sliderParent.style.display = 'initial';
 			} else if (this.id.endsWith('_avg')) {
 				let label = document.createElement('label');
-				let txt = document.createTextNode('Averaging'
-				    + 'Period');
+				let txt = document.createTextNode(this.name +
+				    ' Period');
 				label.setAttribute('for', this.id + '_slider');
 				label.appendChild(txt);
 
@@ -263,19 +320,23 @@ function handleQueryResponse(response, graph) {
 					dashboard.draw(view);
 				}
 
-				document.getElementById(
-				    rangeControlId).appendChild(label);
-				document.getElementById(
-				    rangeControlId).appendChild(slider);
-			    	document.getElementById(
-				    rangeControlId).style.display = 'initial';
+				console.log("Appending to ", sliderParent);
+				sliderParent.appendChild(label);
+				sliderParent.appendChild(slider);
+				sliderParent.style.display = 'initial';
+				if (comparison) {
+					sliderWrapper.style.display = 'initial';
+					if (sliderWrapper.children.length 
+					    == 0) {
+						sliderWrapper.appendChild(sliderParent);
+					}
+				}
 			}
 		} else {
 			viewColumns[this.value] = false;
 			// turn off avg slider if _avg
 			if (this.id.endsWith('_avg')) {
-			    	document.getElementById(
-				    rangeControlId).style.display = 'none';
+			    	sliderParent.style.display = 'none';
 			}
 		}
 
@@ -289,11 +350,108 @@ function handleQueryResponse(response, graph) {
 		// iterate through viewColumns. If key doesn't end in _avg
 		// and value is false, skip it. On true, set it, and check 
 		// key with _avg. If true, set it.
+		let seriesIndex = 0;
+		let myTargetAxis;
 		let myColumns = [0];
+		let mySeriesConf = {};
 		for (let key in viewColumns) {
+			myTargetAxis = 0;
+			console.log("viewColumns ", viewColumns);
 			if (!key.endsWith("_avg") && viewColumns[key]) {
-				myColumns.push(parseInt(key));
+				if (comparison && parseInt(key) > 4) {
+				    let myLabel;
+				    let myColumn = parseInt(key) - 4;
+				    switch (key) {
+				      case '5':
+					myLabel = 'Cases';
+					break;
+				      case '6':
+					myLabel = 'Recovered';
+					break;
+				      case '7':
+					myLabel = 'Deaths';
+					myTargetAxis = 1;
+					break;
+				      case '8':
+					myLabel = 'Tests';
+					break;
+				    }
+					myColumns.push({
+					    type: 'number',
+					    label: myLabel,
+					    sourceColumn: myColumn,
+					    calc: function (dt, row) {
+					        if (row >= 2) {
+						    return dt.getValue(row,
+						        myColumn) -
+							dt.getValue(row - 1,
+							myColumn);
+						} else {
+						    return null;
+						}
+					    }
+					});
+					mySeriesConf = {...mySeriesConf,
+					    [seriesIndex]: { targetAxisIndex:
+					        myTargetAxis } };
+					seriesIndex++;
+				} else {
+					myColumns.push(parseInt(key));
+					if (parseInt(key) == 3) {
+						myTargetAxis = 1;
+					}
+					mySeriesConf = {...mySeriesConf,
+					    [seriesIndex]: { targetAxisIndex:
+					        myTargetAxis } };
+					seriesIndex++;
+				}
 				if (viewColumns[key + '_avg']) {
+					if (comparison) {
+					    let myLabel;
+					    let myColumn = parseInt(key) - 4;
+					    switch (key) {
+					      case '5':
+						myLabel = 'New Cases';
+						break;
+					      case '6':
+						myLabel = 'New Recovered';
+						break;
+					      case '7':
+						myLabel = 'New Deaths';
+						break;
+					      case '8':
+						myLabel = 'New Tests';
+						break;
+					    }
+					    console.log("Pushing for ", myColumn);
+					myColumns.push({
+					    type: 'number',
+					    label: avgDays
+					      + '-day ' + myLabel
+					      + ' Moving Average',
+					    sourceColumn: myColumn,
+					    calc: function (dt, row) {
+						if (row >= avgDays) {
+							let total = 0;
+							total = dt.getValue(
+							    row, myColumn) - 
+							    dt.getValue(
+							    row - avgDays,
+							    myColumn);
+							let average = total /
+							    avgDays;
+							return average;
+						} else {
+			    				// null for < x days
+			    				return null;
+						}
+					    }
+					});
+					mySeriesConf = {...mySeriesConf,
+					    [seriesIndex]: { targetAxisIndex:
+					        myTargetAxis } };
+					seriesIndex++;
+					} else {
 					console.log("AvgDays here ", avgDays);
 					// push the average
 					myColumns.push({
@@ -319,12 +477,36 @@ function handleQueryResponse(response, graph) {
 						}
 					    }
 					});
+					mySeriesConf = {...mySeriesConf,
+					    [seriesIndex]: { targetAxisIndex:
+					        myTargetAxis } };
+					seriesIndex++;
+				        }
 				}
 			}
 		}
 
 		view = new google.visualization.DataView(data);
 		view.setColumns(myColumns);
+
+		if (comparison) {
+			let myVAxes = {
+				0: { 'viewWindow': {'min': 0} },
+				1: { 'viewWindow': {'min': 0} }
+			};
+
+			config = {...config,
+				'chartArea': {'height': '80%', 'width': '90%'},
+				'hAxis': {'slantedText': false},
+				'vAxes': myVAxes,
+				'series': mySeriesConf,
+				'legend': {'position': 'in'}
+			}
+
+			chart.setOptions(config);
+			console.log("chart options are", chart.getOptions());
+		}
+
 	}
 
 	//convert strings in column 0 to proper dates
