@@ -151,16 +151,6 @@ export default function CwraGoolgeGraphEdit( props ) {
 			setAttributes( { [ attr ]: value } );
 		}
 
-		function onSetHAxisTitle ( value ) {
-			return;
-			/*( setTextAttr('cwraggHAxisTitle', value);*/
-		}
-
-		function onSetVAxisTitle ( value ) {
-			return;
-			/*setTextAttr('cwraggHAxisTitle', value);*/
-		}
-
 		return (
 		    <>
 			<div>
@@ -182,11 +172,6 @@ export default function CwraGoolgeGraphEdit( props ) {
 				      isPrimary>Retrieve</Button>
 				    { isValidating && <Spinner /> }
 				</div>
-				<TextControl
-				    label={ __( 'Horizontal Axis Title', 'cwraggb' ) }
-				    value={ /*cwraggHAxisTitle || ''*/ '' }
-				    onChange={ onSetHAxisTitle }
-				/>
 			</div>
 		    </>
 		);
