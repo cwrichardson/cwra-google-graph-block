@@ -128,6 +128,15 @@ class CWRA_Google_Graph_Block_Public {
 	public function render( $block_attributes, $content = '' ) {
 		$this->debugger->debug('Outputting to public.');
 
+		// if we don't have data, we can't do anything
+		if ( ! array_key_exists('cwraggLocalFile',
+		    $block_attributes) ) {
+		        return '<div id="'
+			    . print_r($block_attributes["cwraggBaseId"], true)
+		    	    . '_control_div" style="width: 100%; '
+			    . 'min-height: 50px;" class="cwraggbp"></div>';
+		}
+
 		$controlEl = '<div id="'
 		    . print_r($block_attributes["cwraggBaseId"], true)
 		    . '_control_div" style="width: 100%; min-height: 50px;"'
