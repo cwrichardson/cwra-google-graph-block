@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 
-import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import {
 	Button,
@@ -12,6 +11,7 @@ import {
 	Spinner} from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import { Fragment, useCallback, useState } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -44,9 +44,6 @@ export default function CwraGoolgeGraphEdit( props ) {
 	setAttributes( { cwraggBaseId: clientId } );
 
 	let chart = {};
-	/*
-	chart = new chartLib.LineChart( { attributes, setAttributes } );
-	*/
 	switch ( cwraggChartType ) {
 	    case 'line':
 		chart = new chartLib.LineChart( { attributes, setAttributes } );
@@ -76,47 +73,6 @@ export default function CwraGoolgeGraphEdit( props ) {
 			);
 		}
 	}
-
-	/*
-	function GetInspectorControls() {
-		switch ( cwraggChartType ) {
-			    <>
-			    <PanelRow>
-				<TextControl
-				    label={ __( 'Vertical Axis Title', 'cwraggb' ) }
-				    value={ cwraggVvAxisTitle || '' }
-				    onChange={ onSetVAxisTitle }
-				/>
-			    </PanelRow>
-			    </>
-
-			    ToggleControl example 
-			    return (
-				<>
-				<ToggleControl
-				    label={ __( 'Allow user interaction', 'cwraggb' ) }
-				    help={ userCanEdit
-					? __( 'Google visualization controls enabled.',
-					    'cwraggb' )
-					: __( 'Google visualization controls disabled.',
-					    'cwraggb' ) }
-				    checked={ userCanEdit }
-				    onChange={ () => setAttributes( { cwraggUserCanEdit:
-					! userCanEdit } ) } />
-				</>
-			    );
-
-		    case 'line':
-			chart = new LineChart(cwraggTitle);
-		    	break;
-		    case 'pie':
-			chart = new PieChart(cwraggTitle);
-		    	break;
-		}
-
-		return "<div>" + {chartType} + "</div>";
-	}
-	*/
 
 	function validate() {
 		setIsValidating( true );
