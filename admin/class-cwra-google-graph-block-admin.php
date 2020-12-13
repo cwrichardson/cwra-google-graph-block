@@ -86,7 +86,7 @@ class CWRA_Google_Graph_Block_Admin {
 	 * @since    0.99.1
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name,
+		wp_enqueue_style( $this->plugin_name . '-base-styles',
 		    plugin_dir_url( __FILE__ )
 		        . 'css/cwra-google-graph-block-admin.css',
 		    array(),
@@ -101,7 +101,7 @@ class CWRA_Google_Graph_Block_Admin {
 	 * @since    0.99.1
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_name,
+		wp_enqueue_script( $this->plugin_name . '-admin',
 		    plugin_dir_url( __FILE__ )
 		        . 'js/cwra-google-graph-block-admin.js',
 		    array( 'jquery' ),
@@ -116,7 +116,7 @@ class CWRA_Google_Graph_Block_Admin {
 	 * @since    0.99.1
 	 */
 	public function enqueue_gutenberg_styles() {
-		wp_enqueue_style( $this->plugin_name,
+		wp_enqueue_style( $this->plugin_name . '-block-styles',
 		    plugin_dir_url( __FILE__ )
 		        . 'block/css/cwra-google-graph-block-gutenberg.css',
 		    array( 'wp-blocks', 'wp-element' ),

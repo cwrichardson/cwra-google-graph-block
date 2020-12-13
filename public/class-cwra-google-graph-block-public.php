@@ -82,7 +82,7 @@ class CWRA_Google_Graph_Block_Public {
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style( $this->plugin_name,
+		wp_enqueue_style( $this->plugin_name . '-public-styles',
 		    plugin_dir_url( __FILE__ )
 		        . 'css/cwra-google-graph-block-public.css',
 		    array(), $this->version, 'all' );
