@@ -5,6 +5,8 @@
 import apiFetch from '@wordpress/api-fetch';
 import {
 	Button,
+	ButtonGroup,
+	Placeholder,
 	TextControl,
 	ToggleControl,
 	SelectControl,
@@ -12,6 +14,7 @@ import {
 import { useDispatch } from '@wordpress/data';
 import { Fragment, useCallback, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
+import ServerSideRender from '@wordpress/server-side-render';
 
 /**
  * Internal dependencies
@@ -74,6 +77,29 @@ export default function CwraGoolgeGraphEdit( props ) {
 		}
 	}
 
+	const DataSrcButtonGroup = () => (
+		<>
+		<ButtonGroup>
+		    <Button
+		      label={ __( 'Upload', 'cwraggb') }
+		      isPrimary>{ __( 'Upload', 'cwraggb') }</Button>
+		    <Button
+		      onClick={ validate }
+		      label={ __( 'Retrieve from URL', 'cwraggb') }
+		      aria-disabled={ isValidating }
+		      disabled={ isValidating }
+		      isTertiary>{ __( 'Retrieve from URL',
+		        'cwraggb')}</Button>
+		    { isValidating && <Spinner /> }
+		    <Button
+		      label={ __( 'Schedule from URL',
+		          'cwraggb') }
+		      isTertiary>{ __( 'Schedule from URL',
+		        'cwraggb') }</Button>
+		</ButtonGroup>
+		</>
+	);
+
 	function validate() {
 		setIsValidating( true );
 
@@ -89,7 +115,7 @@ export default function CwraGoolgeGraphEdit( props ) {
 			createErrorNotice(
 				sprintf(
 				    __( 'Could not validate data source. %s',
-				        'cwraggb' ), error.message),
+					'cwraggb' ), error.message),
 				{
 					id: 'cwragg-validate-error',
 					type: 'snackbar'
@@ -133,26 +159,29 @@ export default function CwraGoolgeGraphEdit( props ) {
 		);
 	}
 
-	return (
-	  <>
-	    { chart.sidebar() }
-	    <Fragment>
-		<div className={ "graph_settings" }>
-		    <SelectControl
-		      label={ __( 'Chart Type', 'cwraggb') }
-		      value={ cwraggChartType }
-		      options={ chartSelectType }
-		      onChange={ (chartType) => {
-		      	setAttributes( {
-			  cwraggChartType: chartType } )
-		      }} />
-		</div>
-		<ChartEdit
-		    title={ cwraggTitle }
-		    userCanEdit={ cwraggUserCanEdit }
-		    chartType={ cwraggChartType }
-		    setAttributes={ setAttributes } />
-	    </Fragment>
-	  </>
-	);
+	const ChartRender = () => {
+		return(
+		    <ServerSideRender
+		        block={ props.name }
+			attributes={{ ...attributes }} />
+		);
+	}
+
+	const ChartPlaceholder = () => {
+	    return(
+		<Placeholder
+		  icon='chart-bar'
+		  label="Google Graph"
+		  instructions={ __( 'Upload a data file, get one from a URL, '
+		      + 'or schedule retrieval from a URL.', 'cwraggb') }>
+		    { <DataSrcButtonGroup /> }
+		</Placeholder>
+	    );
+	};
+
+	const Component = cwraggLocalFile
+		? ChartRender
+		: ChartPlaceholder;
+
+	return <Component />;
 }
