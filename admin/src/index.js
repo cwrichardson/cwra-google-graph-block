@@ -13,11 +13,11 @@ import metadata from './block.json';
 const { name } = metadata;
 
 const settings = {
-    title: __('Google Graph Block', 'cwra-google-graph-block'),
+    title: __('Google Graph Block', 'cwraggb'),
     description: __('Display a graph using the Google Graph API',
-      'cwra-google-graph-block'),
-    keywords: [ _x('graph', 'block keywords', 'cwra-google-graph-block'),
-      _x('chart', 'block keywords', 'cwra-google-graph-block') ],
+      'cwraggb'),
+    keywords: [ _x('graph', 'block keywords', 'cwraggb'),
+      _x('chart', 'block keywords', 'cwraggb') ],
     icon: 'chart-bar',
     category: 'widgets',
     attributes: {
