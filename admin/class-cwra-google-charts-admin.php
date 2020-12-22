@@ -6,8 +6,8 @@
  * @link       https://www.chrisrichardson.info
  * @since      0.99.1
  *
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/admin
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/admin
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/admin
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/admin
  * @author     Chris Richardson <cwr@cwrichardson.com>
  */
-class CWRA_Google_Graph_Block_Admin {
+class CWRA_Google_Charts_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -45,7 +45,7 @@ class CWRA_Google_Graph_Block_Admin {
 	 *
 	 * @since    0.99.1
 	 * @access   private
-	 * @var      CWRA_Google_Graph_Block_Debug    $debugger   Debugger
+	 * @var      CWRA_Google_Charts_Debug    $debugger   Debugger
 	 *     instantiation.
 	 */
 	private $debugger;
@@ -57,7 +57,7 @@ class CWRA_Google_Graph_Block_Admin {
 	 * @param    string    $plugin_name    The name of this plugin.
 	 * @param    string    $version   The version of this plugin.
 	 * @param    string    $version   The version of this plugin.
-	 * @param    CWRA_Google_Graph_Block_Public    $plugin_public    The
+	 * @param    CWRA_Google_Charts_Public    $plugin_public    The
 	 *     instance of the class that handles public-facing activities.
 	 */
 	public function __construct( $plugin_name, $version, $plugin_public,
@@ -88,10 +88,10 @@ class CWRA_Google_Graph_Block_Admin {
 	public function enqueue_styles() {
 		wp_enqueue_style( $this->plugin_name . '-base-styles',
 		    plugin_dir_url( __FILE__ )
-		        . 'css/cwra-google-graph-block-admin.css',
+		        . 'css/cwra-google-charts-admin.css',
 		    array(),
 		    $this->date_version(
-		        'css/cwra-google-graph-block-admin.css'),
+		        'css/cwra-google-charts-admin.css'),
 		    'all' );
 	}
 
@@ -103,10 +103,10 @@ class CWRA_Google_Graph_Block_Admin {
 	public function enqueue_scripts() {
 		wp_enqueue_script( $this->plugin_name . '-admin',
 		    plugin_dir_url( __FILE__ )
-		        . 'js/cwra-google-graph-block-admin.js',
+		        . 'js/cwra-google-charts-admin.js',
 		    array( 'jquery' ),
 		    $this->date_version(
-		        'js/cwra-google-graph-block-admin.js'),
+		        'js/cwra-google-charts-admin.js'),
 		    false );
 	}
 
@@ -118,10 +118,10 @@ class CWRA_Google_Graph_Block_Admin {
 	public function enqueue_gutenberg_styles() {
 		wp_enqueue_style( $this->plugin_name . '-block-styles',
 		    plugin_dir_url( __FILE__ )
-		        . 'block/css/cwra-google-graph-block-gutenberg.css',
+		        . 'block/css/cwra-google-charts-gutenberg.css',
 		    array( 'wp-blocks', 'wp-element' ),
 		    $this->date_version(
-		        'block/css/cwra-google-graph-block-gutenberg.css'),
+		        'block/css/cwra-google-charts-gutenberg.css'),
 		    'all' );
 	}
 
@@ -132,20 +132,20 @@ class CWRA_Google_Graph_Block_Admin {
 	 */
 	public function enqueue_gutenberg_scripts() {
 		$asset_file = include( plugin_dir_path( __FILE__ )
-		    . 'block/js/cwra-google-graph-block-admin.asset.php');
+		    . 'block/js/cwra-google-charts-admin.asset.php');
 
 		// register the compiled JS for the backend
 		wp_register_script( $this->plugin_name . '-block-edit',
 		    plugin_dir_url( __FILE__ )
-		        . 'block/js/cwra-google-graph-block-admin.js',
+		        . 'block/js/cwra-google-charts-admin.js',
 		    $asset_file['dependencies'],
 		    $this->date_version(
-		        'block/js/cwra-google-graph-block-admin.js'));
+		        'block/js/cwra-google-charts-admin.js'));
 
 		$this->debugger->debug("Registering block type.");
 		$this->debugger->debug("plugin_public is ");
 		$this->debugger->debug( $this->plugin_public );
-		register_block_type( 'cwra-google-graph-block/graph-block',
+		register_block_type( 'cwra-google-charts/chart',
 		    array(
 		        'attributes' => array(
 			    'cwraggBaseId' => array(

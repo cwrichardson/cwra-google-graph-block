@@ -30,22 +30,22 @@ class Chart {
 		// Assign passed parameters to block attributes by name
 		// setting defaults if not passed.
 		({
-		    cwraggBackgroundColor: this.cwraggBackgroundColor =
+		    cwragcBackgroundColor: this.cwragcBackgroundColor =
 		        DEFAULT_BACKGROUND_COLOR,
-		    cwraggChartArea: this.cwraggChartArea = DEFAULT_CHART_AREA,
-		    /* XXX cwraggColors: this.cwraggColors = DEFAULT_COLORS, */
-		    cwraggEnableInteractivity: this.cwraggEnableInteractivity = 
+		    cwragcChartArea: this.cwragcChartArea = DEFAULT_CHART_AREA,
+		    /* XXX cwragcColors: this.cwragcColors = DEFAULT_COLORS, */
+		    cwragcEnableInteractivity: this.cwragcEnableInteractivity = 
 		        DEFAULT_ENABLE_INTERACTIVITY,
-		    cwraggFontName: this.cwraggFontName = DEFAULT_FONT_NAME,
-		    cwraggFontSize: this.cwraggFontSize = '',
-		    cwraggTitle: this.cwraggTitle = '',
-		    cwraggForcelFrame: this.cwraggForcelFrame = 
+		    cwragcFontName: this.cwragcFontName = DEFAULT_FONT_NAME,
+		    cwragcFontSize: this.cwragcFontSize = '',
+		    cwragcTitle: this.cwragcTitle = '',
+		    cwragcForcelFrame: this.cwragcForcelFrame = 
 		        DEFAULT_FORCEL_FRAME,
-		    cwraggHeight: this.cwraggHeight = DEFAULT_HEIGHT,
-		    cwraggLegend: this.cwraggLegend = DEFAULT_LEGEND,
-		    cwraggTheme: this.cwraggTheme = '',
-		    /* XXX cwraggTooltip: this.cwraggTooltip = DEFAULT_TOOLTIP */
-		    cwraggWidth: this.cwraggWidth = DEFAULT_WIDTH
+		    cwragcHeight: this.cwragcHeight = DEFAULT_HEIGHT,
+		    cwragcLegend: this.cwragcLegend = DEFAULT_LEGEND,
+		    cwragcTheme: this.cwragcTheme = '',
+		    /* XXX cwragcTooltip: this.cwragcTooltip = DEFAULT_TOOLTIP */
+		    cwragcWidth: this.cwragcWidth = DEFAULT_WIDTH
 		} = args.attributes );
 
 		({ setAttributes: this.setAttributes } = args );
@@ -55,27 +55,27 @@ class Chart {
 	}
 
 	get height() {
-		return this.cwraggHeight;
+		return this.cwragcHeight;
 	}
 
 	set height(newHeight) {
-		this.setAttributes( { cwraggHeight: newHeight } );
+		this.setAttributes( { cwragcHeight: newHeight } );
 	}
 
 	get title() {
-		return this.cwraggTitle;
+		return this.cwragcTitle;
 	}
 
 	set title(newTitle) {
-		this.setAttributes( { cwraggTitle: newTitle } );
+		this.setAttributes( { cwragcTitle: newTitle } );
 	}
 
 	get width() {
-		return this.cwraggWidth;
+		return this.cwragcWidth;
 	}
 
 	set width(newWidth) {
-		this.setAttributes( { cwraggWidth: newWidth } );
+		this.setAttributes( { cwragcWidth: newWidth } );
 	}
 
 	addMain() {
@@ -84,21 +84,21 @@ class Chart {
 
 		this.sidebarElements.push((
 			<PanelBody
-			  key='cwraggbpicmain'
-			  title={ __( 'Main Settings', 'cwraggb' ) }>
+			  key='cwragcpicmain'
+			  title={ __( 'Main Settings', 'cwragc' ) }>
 			    <PanelRow>
 			        <TextControl
-				  label={ __( 'Title', 'cwraggb' ) }
+				  label={ __( 'Title', 'cwragc' ) }
 				  value={ this.title }
 				  onChange={ (value) => this.title = value } />
 			    </PanelRow>
 			    <PanelRow>
 			        <TextControl
-				  label={ __( 'Height', 'cwraggb' ) }
+				  label={ __( 'Height', 'cwragc' ) }
 				  value={ this.height }
 				  onChange={ (value) => this.height = value } />
 			        <TextControl
-				  label={ __( 'Width', 'cwraggb' ) }
+				  label={ __( 'Width', 'cwragc' ) }
 				  value={ this.width }
 				  onChange={ (value) => this.width = value } />
 			    </PanelRow>
@@ -111,7 +111,7 @@ class Chart {
 		  <>
 		    <InspectorControls>
 		        <Panel
-			  header={ __( 'Google Graph Settings', 'cwraggb' )}>
+			  header={ __( 'Google Chart Settings', 'cwragc' )}>
 			    { elements }
 		        </Panel>
 		    </InspectorControls>

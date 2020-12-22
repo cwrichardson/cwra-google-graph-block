@@ -3,13 +3,13 @@
 /**
  * Data management
  *
- * A class definition that handles the data management for the graphs.
+ * A class definition that handles the data management for the charts.
  *
  * @link       https://www.chrisrichardson.info
  * @since      0.99.1
  *
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/includes
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/includes
  */
 
 /**
@@ -17,11 +17,11 @@
  *
  *
  * @since      0.99.1
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/includes
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/includes
  * @author     Chris Richardson <cwr@cwrichardson.com>
  */
-class CWRA_Google_Graph_Block_Data {
+class CWRA_Google_Charts_Data {
 
 
 	/**
@@ -48,7 +48,7 @@ class CWRA_Google_Graph_Block_Data {
 		if (! WP_Filesystem()) {
 			return new WP_Error( 'filesystem_problem',
 			    __('Call to WP_Filesystem failed.',
-			    'cwra_google_graph_block') );
+			    'cwragc') );
 		}
 
 		global $wp_filesystem;
@@ -57,17 +57,17 @@ class CWRA_Google_Graph_Block_Data {
 		if ( $upload_dir['error'] ) {
 			return new WP_Error( 'upload_dir_problem',
 			__('There was a problem detecting the upload dir.',
-			'cwra_google_graph_block') );
+			'cwragc') );
 		} else {
 			$upload_dir = trailingslashit($upload_dir['basedir'])
-			    . 'cwra-google-graph-block';
+			    . 'cwragc';
 		}
 
 		if ( ! $wp_filesystem->exists($upload_dir) ) {
 			if (! $wp_filesystem->mkdir($upload_dir) ) {
 				return new WP_Error( 'no_can_make_dir',
 				    __("Couldn't create upload dir.",
-				    'cwra_google_graph_block'));
+				    'cwragc'));
 			}
 
 			// success. Dir didn't exist, and we made it
@@ -75,7 +75,7 @@ class CWRA_Google_Graph_Block_Data {
 		} else if ( ! $wp_filesystem->is_dir($upload_dir) ) {
 			return new WP_Error( 'upload_dir_not_a_dir',
 			    __("Plugin upload directory exists but isn't"
-			    . "a directory", 'cwra_google_graph_block'));
+			    . "a directory", 'cwragc'));
 		}
 
 		// dir was already there. Good to go!

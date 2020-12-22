@@ -6,8 +6,8 @@
  * @link       https://www.chrisrichardson.info
  * @since      0.99.1
  *
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/public
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/public
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the public-facing stylesheet and JavaScript.
  *
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/public
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/public
  * @author     Chris Richardson <cwr@cwrichardson.com>
  */
-class CWRA_Google_Graph_Block_Public {
+class CWRA_Google_Charts_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -45,7 +45,7 @@ class CWRA_Google_Graph_Block_Public {
 	 *
 	 * @since    0.99.1
 	 * @access   private
-	 * @var      CWRA_Google_Graph_Block_Debug    $debugger   Debugger
+	 * @var      CWRA_Google_Charts_Debug    $debugger   Debugger
 	 *     instantiation.
 	 */
 	private $debugger;
@@ -84,7 +84,7 @@ class CWRA_Google_Graph_Block_Public {
 
 		wp_enqueue_style( $this->plugin_name . '-public-styles',
 		    plugin_dir_url( __FILE__ )
-		        . 'css/cwra-google-graph-block-public.css',
+		        . 'css/cwra-google-charts-public.css',
 		    array(), $this->version, 'all' );
 
 		wp_enqueue_style( $this->plugin_name . 'bootstrap',
@@ -103,15 +103,15 @@ class CWRA_Google_Graph_Block_Public {
 
 		wp_enqueue_script( $this->plugin_name . '-public',
 		    plugin_dir_url( __FILE__ )
-		        . 'js/cwra-google-graph-block-public.js',
+		        . 'js/cwra-google-charts-public.js',
 		    array( $this->plugin_name . 'googlecharts', 'jquery' ),
 		    $this->date_version(
-		        'js/cwra-google-graph-block-public.js'), false );
+		        'js/cwra-google-charts-public.js'), false );
 		wp_localize_script( $this->plugin_name . '-public',
-		    'cwraggbp',
+		    'cwragc',
 		    array(
 		    	'contentdir' => wp_upload_dir()['baseurl']
-			    . '/cwraggb'
+			    . '/cwragc'
 		    ));
 
 		wp_enqueue_script( $this->plugin_name . 'googlecharts',
@@ -129,60 +129,60 @@ class CWRA_Google_Graph_Block_Public {
 		$this->debugger->debug('Outputting to public.');
 
 		// if we don't have data, we can't do anything
-		if ( ! array_key_exists('cwraggLocalFile',
+		if ( ! array_key_exists('cwragcLocalFile',
 		    $block_attributes) ) {
 		        return '<div id="'
-			    . print_r($block_attributes["cwraggBaseId"], true)
+			    . print_r($block_attributes["cwragcBaseId"], true)
 		    	    . '_control_div" style="width: 100%; '
-			    . 'min-height: 50px;" class="cwraggbp"></div>';
+			    . 'min-height: 50px;" class="cwragc"></div>';
 		}
 
 		$controlEl = '<div id="'
-		    . print_r($block_attributes["cwraggBaseId"], true)
+		    . print_r($block_attributes["cwragcBaseId"], true)
 		    . '_control_div" style="width: 100%; min-height: 50px;"'
-		    . ' class="cwraggbp cwraggbp_control '
-		    . ' cwraggbp_chart_column_selector">'
+		    . ' class="cwragc cwragc_control '
+		    . ' cwragc_chart_column_selector">'
 		    . '</div>';
 
 		$chartEl = '<div id="'
-		    . print_r($block_attributes["cwraggBaseId"], true)
+		    . print_r($block_attributes["cwragcBaseId"], true)
 		    . '" style="width: 100%; height: 300px;" ';
 
-		$chartEl .= 'class="cwraggbp cwraggbp_chart"'
-		    . ' data-cwraggbp-src="'
-		    . print_r($block_attributes["cwraggLocalFile"], true)
-		    . '" data-cwraggbp-type="'
-		    . print_r($block_attributes["cwraggChartType"], true)
+		$chartEl .= 'class="cwragc cwragc_chart"'
+		    . ' data-cwragc-src="'
+		    . print_r($block_attributes["cwragcLocalFile"], true)
+		    . '" data-cwragc-type="'
+		    . print_r($block_attributes["cwragcChartType"], true)
 		    . '"';
 
-		if ( array_key_exists('cwraggHeight', $block_attributes) ) {
-			$chartEl .= ' data-cwraggbp-height="'
-			    . print_r($block_attributes["cwraggHeight"], true)
+		if ( array_key_exists('cwragcHeight', $block_attributes) ) {
+			$chartEl .= ' data-cwragc-height="'
+			    . print_r($block_attributes["cwragcHeight"], true)
 			    . '"';
 		}
 
-		if ( array_key_exists('cwraggWidth', $block_attributes) ) {
-			$chartEl .= ' data-cwraggbp-width="'
-			    . print_r($block_attributes["cwraggWidth"], true)
+		if ( array_key_exists('cwragcWidth', $block_attributes) ) {
+			$chartEl .= ' data-cwragc-width="'
+			    . print_r($block_attributes["cwragcWidth"], true)
 			    . '"';
 		}
 
-		if ( array_key_exists('cwraggTitle', $block_attributes) ) {
-			$chartEl .= ' data-cwraggbp-title="'
-			    . print_r($block_attributes["cwraggTitle"], true)
+		if ( array_key_exists('cwragcTitle', $block_attributes) ) {
+			$chartEl .= ' data-cwragc-title="'
+			    . print_r($block_attributes["cwragcTitle"], true)
 			    . '"';
 		}
 
-		if ( array_key_exists('cwraggHAxisTitle', $block_attributes) ) {
-			$chartEl .= ' data-cwraggbp-haxis-title="'
-			    . print_r($block_attributes["cwraggHAxisTitle"],
+		if ( array_key_exists('cwragcHAxisTitle', $block_attributes) ) {
+			$chartEl .= ' data-cwragc-haxis-title="'
+			    . print_r($block_attributes["cwragcHAxisTitle"],
 			        true)
 			    . '"';
 		}
 
-		if ( array_key_exists('cwraggVAxisTitle', $block_attributes) ) {
-			$chartEl .= ' data-cwraggbp-vaxis-title="'
-			    . print_r($block_attributes["cwraggVAxisTitle"],
+		if ( array_key_exists('cwragcVAxisTitle', $block_attributes) ) {
+			$chartEl .= ' data-cwragc-vaxis-title="'
+			    . print_r($block_attributes["cwragcVAxisTitle"],
 			        true)
 			    . '"';
 		}
@@ -190,23 +190,23 @@ class CWRA_Google_Graph_Block_Public {
 		$chartEl .= '></div>';
 
 		$colSelectEl = '<div id="'
-		    . print_r($block_attributes["cwraggBaseId"], true)
+		    . print_r($block_attributes["cwragcBaseId"], true)
 		    . '_col_control_div" style="min-height: 50px;"'
-		    . ' class="cwraggbp cwraggbp_control cwraggbp_col_control'
+		    . ' class="cwragc cwragc_control cwragc_col_control'
 		    . ' form-group">'
 		    . '</div>';
 
 		$rangeSliderEl = '<div id="'
-		    . print_r($block_attributes["cwraggBaseId"], true)
+		    . print_r($block_attributes["cwragcBaseId"], true)
 		    . '_range_control_div" style="min-height: 50px; display: none;"'
-		    . ' class="cwraggbp cwraggbp_control '
-		    . 'cwraggbp_range_control form-group">'
+		    . ' class="cwragc cwragc_control '
+		    . 'cwragc_range_control form-group">'
 		    . '</div>';
 
 		$el = '<div id="'
-		    . print_r($block_attributes["cwraggBaseId"], true)
+		    . print_r($block_attributes["cwragcBaseId"], true)
 		    . '_dashboard_div"'
-		    . ' class="cwraggbp cwraggbp_dashboard">'
+		    . ' class="cwragc cwragc_dashboard">'
 		    . '<div class="outer-wrapper">'
 		    . '<div class="chart-body">'
 		    . '<div>'

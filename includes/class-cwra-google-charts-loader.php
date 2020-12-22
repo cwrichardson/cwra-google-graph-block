@@ -6,8 +6,8 @@
  * @link       https://www.chrisrichardson.info
  * @since      0.99.1
  *
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/includes
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/includes
  */
 
 /**
@@ -17,18 +17,18 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/includes
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/includes
  * @author     Chris Richardson <cwr@cwrichardson.com>
  */
-class CWRA_Google_Graph_Block_Loader {
+class CWRA_Google_Charts_Loader {
 
 	/**
 	 * Debugger
 	 *
 	 * @since    0.99.1
 	 * @access   private
-	 * @var      CWRA_Google_Graph_Block_Debug    $debugger   Debugger
+	 * @var      CWRA_Google_Charts_Debug    $debugger   Debugger
 	 *     instantiation.
 	 */
 	private $debugger;
@@ -60,6 +60,7 @@ class CWRA_Google_Graph_Block_Loader {
 	 */
 	public function __construct( $debugger ) {
 
+		$this->counter = 1;
 		$this->debugger = $debugger;
 		$this->actions = array();
 		$this->filters = array();
@@ -162,6 +163,9 @@ class CWRA_Google_Graph_Block_Loader {
 			    $hook['callback'] ), $hook['priority'],
 			    $hook['accepted_args'] );
 		}
+
+		$this->debugger->debug('New instantiation, run called'
+		    . ' with counter ' . $this->counter);
 
 	}
 

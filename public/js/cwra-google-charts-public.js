@@ -6,7 +6,7 @@ google.charts.setOnLoadCallback(initializeData);
 
 // Query a CSV for the data
 function initializeData() {
-	let graphs = document.getElementsByClassName("cwraggbp_chart");
+	let graphs = document.getElementsByClassName("cwragc_chart");
 
 	for (let i = 0; i < graphs.length; i++) {
 		let opts;
@@ -14,7 +14,7 @@ function initializeData() {
 		let graph = graphs.item(i);
 
 		// XXX make this based on configuration
-		if (graph.dataset.cwraggbpTitle == "Comparisons") {
+		if (graph.dataset.cwragcTitle == "Comparisons") {
 			opts = {sendMethod: 'auto',
 				csvColumns: ['string', 'number', 'number',
 				    'number', 'number'],
@@ -26,8 +26,8 @@ function initializeData() {
 		}
 
 		query = new google.visualization.Query(
-		    cwraggbp.contentdir + '/'
-		        + graph.dataset.cwraggbpSrc,
+		    cwragc.contentdir + '/'
+		        + graph.dataset.cwragcSrc,
 		    opts);
 
 		// Use an "in between" anonymous function, so we can pass
@@ -82,7 +82,7 @@ function handleQueryResponse(response, graph) {
 	}
 
 	// XXX make this configurable
-	if (graph.dataset.cwraggbpTitle == "Comparisons") {
+	if (graph.dataset.cwragcTitle == "Comparisons") {
 		comparison = true;
 	}
 
@@ -92,7 +92,7 @@ function handleQueryResponse(response, graph) {
 	let colControlId = baseId + '_col_control_div';
 	let rangeControlId = baseId + '_range_control_div';
 
-	switch ( graph.dataset.cwraggbpType ) {
+	switch ( graph.dataset.cwragcType ) {
 	    case 'area':
 		chartType = 'AreaChart';
 		break;
@@ -151,11 +151,11 @@ function handleQueryResponse(response, graph) {
 	        'end': new Date()}}
 	});
 
-	options = getOptions(graph.dataset.cwraggbpType);
+	options = getOptions(graph.dataset.cwragcType);
 	for (const key in options) {
-		if (graph.dataset['cwraggbp' + key]) {
+		if (graph.dataset['cwragc' + key]) {
 			config = {...config,
-			    [options[key]]: graph.dataset['cwraggbp' + key] };
+			    [options[key]]: graph.dataset['cwragc' + key] };
 		}
 	}
 
@@ -562,7 +562,7 @@ function handleQueryResponse(response, graph) {
 	 */
 	/*
 	let data = response.getDataTable();
-	switch ( graph.dataset.cwraggbpType ) {
+	switch ( graph.dataset.cwragcType ) {
 	    case 'area':
 		chart = new google.visualization.AreaChart(graph);
 		break;
@@ -585,16 +585,16 @@ function handleQueryResponse(response, graph) {
 	*/
 
 	/*
-	options = getOptions(graph.dataset.cwraggbpType);
+	options = getOptions(graph.dataset.cwragcType);
 	console.log("Returned options ", options);
 	for (const key in options) {
 		console.log("Checking for ", key);
-		console.log("got ", graph.dataset['cwraggbp' + key]);
-		console.log("with ", 'cwraggbp' + key);
-		if (graph.dataset['cwraggbp' + key]) {
+		console.log("got ", graph.dataset['cwragc' + key]);
+		console.log("with ", 'cwragc' + key);
+		if (graph.dataset['cwragc' + key]) {
 			console.log("Got one!");
 			config = {...config,
-			    [options[key]]: graph.dataset['cwraggbp' + key] };
+			    [options[key]]: graph.dataset['cwragc' + key] };
 			console.log("So now config is", config);
 		}
 	}

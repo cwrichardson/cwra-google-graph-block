@@ -9,8 +9,8 @@
  * @link       https://www.chrisrichardson.info
  * @since      0.99.1
  *
- * @package    Cwra_Google_Graph_Block
- * @subpackage Cwra_Google_Graph_Block/includes
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      0.99.1
- * @package    Cwra_Google_Graph_Block
- * @subpackage Cwra_Google_Graph_Block/includes
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/includes
  * @author     Chris Richardson <cwr@cwrichardson.com>
  */
-class Cwra_Google_Graph_Block_i18n {
+class CWRA_Google_Charts_i18n {
 
 
 	/**
@@ -35,13 +35,11 @@ class Cwra_Google_Graph_Block_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'cwra-google-graph-block',
+			'cwragc',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
 
 	}
-
-
 
 }

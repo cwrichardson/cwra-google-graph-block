@@ -8,8 +8,8 @@
  * @link       https://www.chrisrichardson.info
  * @since      1.0.0
  *
- * @package    Cwra_Google_Graph_Block
- * @subpackage Cwra_Google_Graph_Block/admin/partials
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/admin/partials
  */
 ?>
 

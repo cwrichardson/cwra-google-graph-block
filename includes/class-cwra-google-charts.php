@@ -9,8 +9,8 @@
  * @link       https://www.chrisrichardson.info
  * @since      0.99.1
  *
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/includes
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      0.99.1
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/includes
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/includes
  * @author     Chris Richardson <cwr@cwrichardson.com>
  */
-class CWRA_Google_Graph_Block {
+class CWRA_Google_Charts {
 
 	/**
 	 * The loader that's responsible for maintaining and
@@ -35,7 +35,7 @@ class CWRA_Google_Graph_Block {
 	 *
 	 * @since    0.99.1
 	 * @access   protected
-	 * @var      CWRA_Google_Graph_Block_Loader    $loader    Maintains and
+	 * @var      CWRA_Google_Charts_Loader    $loader    Maintains and
 	 *     registers all hooks for the plugin.
 	 */
 	protected $loader;
@@ -65,7 +65,7 @@ class CWRA_Google_Graph_Block {
 	 *
 	 * @since    0.99.1
 	 * @access   protected
-	 * @var      CWRA_Google_Graph_Block_Public $plugin_public   The
+	 * @var      CWRA_Google_Charts_Public $plugin_public   The
 	 *     public-facing class. Needs to be passed to the admin class, so
 	 *     that the block can register the generation function.
 	 */
@@ -76,10 +76,10 @@ class CWRA_Google_Graph_Block {
 	 *
 	 * @since    0.99.1
 	 * @access   protected
-	 * @var      CWRA_Google_Graph_Block_Debug $debugger   A collection
+	 * @var      CWRA_Google_Charts_Debug $debugger   A collection
 	 *     of debugging tools.
 	 */
-	protected $debugger;
+	public $debugger;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -92,18 +92,18 @@ class CWRA_Google_Graph_Block {
 	 * @since    0.99.1
 	 */
 	public function __construct() {
-		if ( defined( 'CWRA_GOOGLE_GRAPH_BLOCK_VERSION' ) ) {
-			$this->version = CWRA_GOOGLE_GRAPH_BLOCK_VERSION;
+		if ( defined( 'CWRA_GOOGLE_CHARTS_VERSION' ) ) {
+			$this->version = CWRA_GOOGLE_CHARTS_VERSION;
 		} else {
 			$this->version = '0.99.1';
 		}
-		$this->plugin_name = 'cwra-google-graph-block';
+		$this->plugin_name = 'cwra-google-charts';
 
 		// normally this is all handled by the loader, but we want
 		// debugging very early
 		require_once plugin_dir_path( dirname( __FILE__ ) )
-		    . 'includes/class-cwra-google-graph-block-debug.php';
-		$this->debugger = new CWRA_Google_Graph_Block_Debug();
+		    . 'includes/class-cwra-google-charts-debug.php';
+		$this->debugger = new CWRA_Google_Charts_Debug();
 
 		/*
 		 * XXX cwr: not currenty outputting to screen, so we don't
@@ -125,17 +125,17 @@ class CWRA_Google_Graph_Block {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - CWRA_Google_Graph_Block_Loader. Orchestrates the hooks of the
+	 * - CWRA_Google_Charts_Loader. Orchestrates the hooks of the
 	 *   plugin.
-	 * - CWRA_Google_Graph_Block_i18n. Defines internationalization
+	 * - CWRA_Google_Charts_i18n. Defines internationalization
 	 *   functionality.
-	 * - CWRA_Google_Graph_Block_Admin. Defines all hooks for the admin
+	 * - CWRA_Google_Charts_Admin. Defines all hooks for the admin
 	 *   area.
-	 * - CWRA_Google_Graph_Block_Public. Defines all hooks for the public
+	 * - CWRA_Google_Charts_Public. Defines all hooks for the public
 	 *   side of the site.
-	 * - CWRA_Google_Graph_Block_Data. Defines all hooks for handling
-	 *   the data used by Google Graph.
-	 * - CWRA_Google_Graph_Block_API. Initialize and register the
+	 * - CWRA_Google_Charts_Data. Defines all hooks for handling
+	 *   the data used by Google Charts.
+	 * - CWRA_Google_Charts_API. Initialize and register the
 	 *   plugin specific RESTful API routes and endpoints.
 	 *
 	 * Create an instance of the loader which will be used to register the
@@ -151,43 +151,43 @@ class CWRA_Google_Graph_Block {
 		 * filters of the core plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) )
-		    . 'includes/class-cwra-google-graph-block-loader.php';
+		    . 'includes/class-cwra-google-charts-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization
 		 * functionality of the plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) )
-		    . 'includes/class-cwra-google-graph-block-i18n.php';
+		    . 'includes/class-cwra-google-charts-i18n.php';
 
 		/**
 		 * The class responsible for handling data management.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) )
-		    . 'includes/class-cwra-google-graph-block-data.php';
+		    . 'includes/class-cwra-google-charts-data.php';
 
 		/**
 		 * The class responsible for defining all actions that occur
 		 * in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) )
-		    . 'admin/class-cwra-google-graph-block-admin.php';
+		    . 'admin/class-cwra-google-charts-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur
 		 * in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) )
-		    . 'admin/class-cwra-google-graph-block-api.php';
+		    . 'admin/class-cwra-google-charts-api.php';
 
 		/**
 		 * The class responsible for defining all actions that occur
 		 * in the public-facing side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) )
-		    . 'public/class-cwra-google-graph-block-public.php';
+		    . 'public/class-cwra-google-charts-public.php';
 
-		$this->loader = new CWRA_Google_Graph_Block_Loader( 
+		$this->loader = new CWRA_Google_Charts_Loader( 
 		    $this->debugger );
 
 	}
@@ -195,7 +195,7 @@ class CWRA_Google_Graph_Block {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the CWRA_Google_Graph_Block_i18n class in order to set the
+	 * Uses the CWRA_Google_Charts_i18n class in order to set the
 	 * domain and to register the hook with WordPress.
 	 *
 	 * @since    0.99.1
@@ -203,7 +203,7 @@ class CWRA_Google_Graph_Block {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new CWRA_Google_Graph_Block_i18n(
+		$plugin_i18n = new CWRA_Google_Charts_i18n(
 		    $this->debugger );
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n,
@@ -220,7 +220,7 @@ class CWRA_Google_Graph_Block {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new CWRA_Google_Graph_Block_Admin(
+		$plugin_admin = new CWRA_Google_Charts_Admin(
 		    $this->get_plugin_name(), $this->get_version(),
 		    $this->get_public(), $this->debugger );
 
@@ -237,7 +237,7 @@ class CWRA_Google_Graph_Block {
 		    $plugin_admin, 'enqueue_gutenberg_scripts' );
 
 		// RESTful API
-		$plugin_api = new CWRA_Google_Graph_Block_API(
+		$plugin_api = new CWRA_Google_Charts_API(
 		    $this->get_plugin_name(), $this->get_version(),
 		    $this->debugger);
 		$this->loader->add_action( 'rest_api_init',
@@ -254,7 +254,7 @@ class CWRA_Google_Graph_Block {
 	 */
 	private function define_public_hooks() {
 
-		$this->plugin_public = new CWRA_Google_Graph_Block_Public(
+		$this->plugin_public = new CWRA_Google_Charts_Public(
 		    $this->get_plugin_name(), $this->get_version(),
 		    $this->debugger );
 
@@ -269,7 +269,7 @@ class CWRA_Google_Graph_Block {
 	 * The reference to the class that handles the front-end.
 	 *
 	 * @since     0.99.1
-	 * @return    CWRA_Google_Graph_Block_Public    Handles public-facing
+	 * @return    CWRA_Google_Charts_Public    Handles public-facing
 	 *     functionality
 	 */
 	protected function get_public() {
@@ -283,7 +283,7 @@ class CWRA_Google_Graph_Block {
 	public function enqueue_debug_style() {
 		wp_enqueue_style( $this->plugin_name . '-debug',
 		    plugin_dir_url( __FILE__ )
-		    . '../public/css/cwra-google-graph-block-debug.css',
+		    . '../public/css/cwra-google-charts-debug.css',
 		    array(), $this->version, 'all' );
 	}
 	*/
@@ -314,7 +314,7 @@ class CWRA_Google_Graph_Block {
 	 * with the plugin.
 	 *
 	 * @since     0.99.1
-	 * @return    CWRA_Google_Graph_Block_Loader    Orchestrates the hooks
+	 * @return    CWRA_Google_Charts_Loader    Orchestrates the hooks
 	 *     of the plugin.
 	 */
 	public function get_loader() {

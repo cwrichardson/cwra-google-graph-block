@@ -13,44 +13,46 @@ import metadata from './block.json';
 const { name } = metadata;
 
 const settings = {
-    title: __('Google Graph Block', 'cwraggb'),
-    description: __('Display a graph using the Google Graph API',
-      'cwraggb'),
-    keywords: [ _x('graph', 'block keywords', 'cwraggb'),
-      _x('chart', 'block keywords', 'cwraggb') ],
+    title: __('Google Chart Block', 'cwragc'),
+    description: __('Display a chart using the Google Chart API',
+      'cwragc'),
+    keywords: [ _x('graph', 'block keywords', 'cwragc'),
+      _x('Google chart', 'block keywords', 'cwragc'),
+      _x('Google graph', 'block keywords', 'cwragc'),
+      _x('chart', 'block keywords', 'cwragc') ],
     icon: 'chart-bar',
     category: 'widgets',
     attributes: {
-    	cwraggBaseId: {
+    	cwragcBaseId: {
 		type: 'string',
 	},
-    	cwraggChartType: {
+    	cwragcChartType: {
 		type: 'string',
 		default: 'line'
 	},
-    	cwraggDataSource: {
+    	cwragcDataSource: {
 		type: 'string',
 		default: 'remote-csv'
 	},
-    	cwraggDataSourceType: {
+    	cwragcDataSourceType: {
 		type: 'string'
 	},
-    	cwraggHeight: {
+    	cwragcHeight: {
 		type: 'number'
 	},
-    	cwraggLocalFile: {
+    	cwragcLocalFile: {
 		type: 'string'
 	},
-    	cwraggTitle: {
+    	cwragcTitle: {
 		type: 'string'
 	},
-    	cwraggWidth: {
+    	cwragcWidth: {
 		type: 'number'
 	}
     },
     example: {
         attributes: {
-	    cwragg_datasource: 'Nothing to see here'
+	    cwragc_datasource: 'Nothing to see here'
 	}
     },
     edit,

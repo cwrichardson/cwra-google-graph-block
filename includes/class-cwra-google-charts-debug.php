@@ -9,8 +9,8 @@
  * @link       https://www.chrisrichardson.info
  * @since      0.99.1
  *
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/includes
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/includes
  */
 
 /**
@@ -19,11 +19,11 @@
  * This is used to define debugging functions.
  *
  * @since      0.99.1
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/includes
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/includes
  * @author     Chris Richardson <cwr@cwrichardson.com>
  */
-class CWRA_Google_Graph_Block_Debug {
+class CWRA_Google_Charts_Debug {
 
 
 	/**
@@ -43,8 +43,8 @@ class CWRA_Google_Graph_Block_Debug {
 	 */
 	public function __construct() {
 		// conditionally load the debugging code
-		if ( (defined( 'CWRA_GOOGLE_GRAPH_BLOCK_DEBUG' ) 
-		    && CWRA_GOOGLE_GRAPH_BLOCK_DEBUG === true )
+		if ( (defined( 'CWRA_GOOGLE_CHARTS_DEBUG' ) 
+		    && CWRA_GOOGLE_CHARTS_DEBUG === true )
 		    || WP_DEBUG ) {
 		    	$this->enabled = true;
 		}
@@ -60,9 +60,56 @@ class CWRA_Google_Graph_Block_Debug {
 		if ( ! $this->enabled ) return;
 		if (WP_DEBUG_LOG) {
 			$this->print_log( $code );
-			$this->print_html( $code );
 		} else {
 			$this->print_html( $code );
+		}
+	}
+
+	/**
+	 * Output all actions and filters
+	 *
+	 * @since    0.99.1
+	 * @access   public
+	 */
+	public function getFilters() {
+		if ( ! $this->enabled ) return;
+
+		$code = "Starting filter dump ... \n";
+		foreach ( $GLOBALS['wp_filter'] as $tag => $priority_sets ) {
+			$code .= "debugging for tag "
+			    . print_r($tag, true) . "\n";
+
+			/* Each [priority] */
+			foreach ( $priority_sets as $priority => $idxs ) {
+				$code .= "\tpriority " . $priority . ":\n";
+
+				/* Each [callback] */
+				foreach ( $idxs as $idx => $callback ) {
+					if ( gettype($callback['function']) ==
+					    'object' ) {
+						$function = '{ closure }';
+					} else if ( is_array(
+					    $callback['function'] ) ) {
+						$function = print_r(
+						    $callback['function'][0],
+						    true );
+						$function .= ':: ' . print_r(
+						    $callback['function'][1],
+							true );
+					} else {
+						$function =
+						    $callback['function'];
+					}
+
+					$code .= "\t\t" . $function . '('
+					    . $callback['accepted_args']
+					    . ' arguments)';
+				}
+				$code .= "\n";
+			}
+			$code .= "\n";
+
+			$this->debug($code);
 		}
 	}
 
@@ -74,11 +121,11 @@ class CWRA_Google_Graph_Block_Debug {
 	 */
 	private function print_html( $code ) {
 
-		$output = '';
+		$output = 'CWRAGGB: \n';
 
 		if ( is_null( $code ) || is_string($code) || is_int( $code )
 		    || is_bool($code) || is_float( $code ) 
-		    || is_object($code) ) {
+		    || is_object($code) || is_array($code) ) {
 			$output .= print_r( $code, true );
 		} else {
 			$output .=  $code;
@@ -103,7 +150,7 @@ class CWRA_Google_Graph_Block_Debug {
 			$code = print_r( $code, true );
 		}
 
-		error_log( $code );
+		error_log( "CWRAGGB: " . $code );
 
 	}
 

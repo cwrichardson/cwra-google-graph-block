@@ -6,8 +6,8 @@
  * @link       https://www.chrisrichardson.info
  * @since      0.99.1
  *
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/admin
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/admin
  */
 
 /**
@@ -15,11 +15,11 @@
  *
  * Registers plugin specific routes and endpoints.
  *
- * @package    CWRA_Google_Graph_Block
- * @subpackage CWRA_Google_Graph_Block/admin
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/admin
  * @author     Chris Richardson <cwr@cwrichardson.com>
  */
-class CWRA_Google_Graph_Block_API {
+class CWRA_Google_Charts_API {
 
 	/**
 	 * The ID of this plugin.
@@ -44,7 +44,7 @@ class CWRA_Google_Graph_Block_API {
 	 *
 	 * @since    0.99.1
 	 * @access   private
-	 * @var      CWRA_Google_Graph_Block_Debug    $debugger   Debugger
+	 * @var      CWRA_Google_Charts_Debug    $debugger   Debugger
 	 *     instantiation.
 	 */
 	private $debugger;
@@ -71,7 +71,7 @@ class CWRA_Google_Graph_Block_API {
 	 */
 	public function rest_init() {
 		register_rest_route(
-		    'cwraggb/v1',
+		    'cwragc/v1',
 		    '/setremotedatasrc',
 		    array(
 		    	'methods'	=> 'POST',
@@ -110,10 +110,10 @@ class CWRA_Google_Graph_Block_API {
 		if ( $upload_dir['error'] ) {
 			return new WP_Error( 'upload_dir_problem',
 			    __('There was a problem detecting the upload dir.',
-			    'cwraggb') );
+			    'cwragc') );
 		} else {
 			$upload_dir = trailingslashit($upload_dir['basedir'])
-			    . 'cwraggb';
+			    . 'cwragc';
 			wp_mkdir_p($upload_dir);
 		}
 
@@ -143,8 +143,8 @@ class CWRA_Google_Graph_Block_API {
 
 		$args['url'] = array(
 		    'description'	=> esc_html__('The URL from which to '
-		        . 'retrieve the data for the graph.',
-		        'cwraggb'),
+		        . 'retrieve the data for the chart.',
+		        'cwragc'),
 		    'type'		=> 'string',
 		    'required'		=> true,
 		    'validate_callback' => array($this, 'validate_url'),
@@ -154,7 +154,7 @@ class CWRA_Google_Graph_Block_API {
 		$args['type'] = array(
 		    'description' 	=> esc_html__('The type of data in '
 			. 'the file. Currently supports "csv" and '
-			. '"json".', 'cwraggb'),
+			. '"json".', 'cwragc'),
 		    'type'	  	=> 'string',
 		    'default'		=> 'remote-csv',
 		    'validate_callback'	=> array($this,
@@ -164,7 +164,7 @@ class CWRA_Google_Graph_Block_API {
 		$args['postId'] = array(
 		    'description' 	=> esc_html__('The ID of the post '
 			. "for which you're trying to update a data source.",
-			'cwraggb'),
+			'cwragc'),
 		    'type'	  	=> 'integer',
 		    'required'		=> true,
 		    'validate_callback'	=> array($this,
@@ -201,7 +201,7 @@ class CWRA_Google_Graph_Block_API {
 			    || ! is_int( $value )) {
 				return new WP_Error( 'rest_invalid_param',
 				    sprintf( esc_html__('%1$s is not of '
-				    . 'type %2$s', 'cwraggb'),
+				    . 'type %2$s', 'cwragc'),
 				    $param, 'integer' ),
 				    array( 'status' => 400 ) );
 			}
@@ -213,7 +213,7 @@ class CWRA_Google_Graph_Block_API {
 			// can't really be valid if it isn't there
 			return new WP_Error( 'rest_invalid_param',
 			    sprintf( esc_html__( '%s was not registered as a '
-			    . 'request argument.', 'cwraggb' ),
+			    . 'request argument.', 'cwragc' ),
 			    $param ), array( 'status' => 400 ) );
 		}
 
@@ -241,7 +241,7 @@ class CWRA_Google_Graph_Block_API {
 			    && ! is_string( $value )) {
 				return new WP_Error( 'rest_invalid_param',
 				    sprintf( esc_html__('%1$s is not of '
-				    . 'type %2$s', 'cwraggb'),
+				    . 'type %2$s', 'cwragc'),
 				    $param, 'string' ),
 				    array( 'status' => 400 ) );
 			}
@@ -250,7 +250,7 @@ class CWRA_Google_Graph_Block_API {
 			if ( ! wp_http_validate_url( $value ) ) {
 				return new WP_Error( 'rest_invalid_param',
 				    sprintf( esc_html__('%1$s is not a valid '
-				    . 'url.', 'cwraggb'),
+				    . 'url.', 'cwragc'),
 				    $value),
 				    array( 'status' => 400 ) );
 			}
@@ -258,7 +258,7 @@ class CWRA_Google_Graph_Block_API {
 			// can't really be valid if it isn't there
 			return new WP_Error( 'rest_invalid_param',
 			    sprintf( esc_html__( '%s was not registered as a '
-			    . 'request argument.', 'cwraggb' ),
+			    . 'request argument.', 'cwragc' ),
 			    $param ), array( 'status' => 400 ) );
 		}
 
@@ -289,7 +289,7 @@ class CWRA_Google_Graph_Block_API {
 		// validated, but ... you never know.
 		return new WP_Error( 'rest_api_sad',
 		    esc_html__( "Your submitted URL can't be made sane.",
-		    'cwraggb' ), array( 'status' => 500 ) );
+		    'cwragc' ), array( 'status' => 500 ) );
 	}
 
 	/***
@@ -322,7 +322,7 @@ class CWRA_Google_Graph_Block_API {
 			    && ! is_string( $value )) {
 				return new WP_Error( 'rest_invalid_param',
 				    sprintf( esc_html__('%1$s is not of '
-				    . 'type %2$s', 'cwraggb'),
+				    . 'type %2$s', 'cwragc'),
 				    $param, 'string' ),
 				    array( 'status' => 400 ) );
 			}
@@ -336,7 +336,7 @@ class CWRA_Google_Graph_Block_API {
 				return new WP_Error( 'rest_invalid_param',
 				    sprintf( esc_html__('%1$s is not a type '
 				    . 'I understand.',
-				    'cwraggb'),
+				    'cwragc'),
 				    $value),
 				    array( 'status' => 400 ) );
 			}
@@ -369,7 +369,7 @@ class CWRA_Google_Graph_Block_API {
 			return new WP_Error( 'rest_cannot_edit',
 			    esc_html__('Forbidden! '
 			    . "You don't have permission to edit this post.",
-			    'cwraggb'), array( 'status' =>
+			    'cwragc'), array( 'status' =>
 			    rest_authorization_required_code() ));
 		}
 
@@ -398,7 +398,7 @@ class CWRA_Google_Graph_Block_API {
 		        'local-data-src-name'  => array(
 			    'description' => esc_html__('The local file name '
 			        . 'where the remote data was stored.',
-				'cwraggb'),
+				'cwragc'),
 			    'type'	  => 'string')
 			)
 		);

@@ -22,7 +22,7 @@
  * @link       https://www.chrisrichardson.info
  * @since      0.99.1
  *
- * @package    CWRA_Google_Graph_Block
+ * @package    CWRA_Google_Charts
  */
 
 // If uninstall not called from WordPress, then exit.
@@ -47,7 +47,7 @@ require_once ABSPATH . 'wp-admin/includes/file.php';
 if (! WP_Filesystem()) {
 	return new WP_Error( 'filesystem_problem',
 	    __('Call to WP_Filesystem failed.',
-	    'cwra_google_graph_block') );
+	    'cwragc') );
 }
 
 global $wp_filesystem;
@@ -56,15 +56,15 @@ $upload_dir = wp_upload_dir();
 if ( $upload_dir['error'] ) {
 	return new WP_Error( 'upload_dir_problem',
 	    __('There was a problem detecting the upload dir.',
-	    'cwra_google_graph_block') );
+	    'cwragc') );
 } else {
 	$upload_dir = trailingslashit($upload_dir['basedir'])
-	    . 'cwra-google-graph-block';
+	    . 'cwragc';
 }
 if ( ! $wp_filesystem->rmdir($upload_dir, true) ) {
 	return new WP_Error( 'uninstall_problem',
 	    __('There was a problem removing the data directory.'
-	    . ' Uninstall failed.', 'cwra-google-graph-block'));
+	    . ' Uninstall failed.', 'cwragc'));
 }
 
 return;

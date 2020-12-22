@@ -1,16 +1,16 @@
 {
-  "name": "cwra-google-graph-block",
-  "version": "1.0.0",
-  "description": "Adds a Guttenberg block for displaying Google Graphs in WordPress",
+  "name": "cwra-google-charts",
+  "version": "0.99.1",
+  "description": "Adds a Guttenberg block for displaying Google Carts in WordPress",
   "main": "index.js",
   "scripts": {
-    "build": "wp-scripts build admin/src/index.js --output=admin/block/js/cwra-google-graph-block-admin.js",
-    "start": "wp-scripts start admin/src/index.js --output=admin/block/js/cwra-google-graph-block-admin.js",
+    "build": "wp-scripts build admin/src/index.js --output=admin/block/js/cwra-google-charts-admin.js",
+    "start": "wp-scripts start admin/src/index.js --output=admin/block/js/cwra-google-charts-admin.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cwrichardson/cwra-google-graph-block.git"
+    "url": "git+https://github.com/cwrichardson/cwra-google-charts.git"
   },
   "keywords": [
     "WordPress",
@@ -21,9 +21,9 @@
   "author": "Chris Richardson",
   "license": "GPL-2.0+",
   "bugs": {
-    "url": "https://github.com/cwrichardson/cwra-google-graph-block/issues"
+    "url": "https://github.com/cwrichardson/cwra-google-charts/issues"
   },
-  "homepage": "https://cwrichardson.com/open-source/cwra-google-graph-block#readme",
+  "homepage": "https://cwrichardson.com/open-source/cwra-google-charts#readme",
   "devDependencies": {
     "@wordpress/scripts": "^12.5.0"
   }

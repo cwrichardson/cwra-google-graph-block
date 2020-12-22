@@ -6,8 +6,8 @@
  * @link       https://www.chrisrichardson.info
  * @since      0.99.1
  *
- * @package    Cwra_Google_Graph_Block
- * @subpackage Cwra_Google_Graph_Block/includes
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      0.99.1
- * @package    Cwra_Google_Graph_Block
- * @subpackage Cwra_Google_Graph_Block/includes
+ * @package    CWRA_Google_Charts
+ * @subpackage CWRA_Google_Charts/includes
  * @author     Chris Richardson <cwr@cwrichardson.com>
  */
-class Cwra_Google_Graph_Block_Deactivator {
+class CWRA_Google_Charts_Deactivator {
 
 	/**
 	 * Short Description. (use period)
