@@ -106,7 +106,7 @@ class CWRA_Google_Charts_Public {
 		        . 'js/cwra-google-charts-public.js',
 		    array( $this->plugin_name . 'googlecharts', 'jquery' ),
 		    $this->date_version(
-		        'js/cwra-google-charts-public.js'), false );
+		        'js/cwra-google-charts-public.js'), true );
 		wp_localize_script( $this->plugin_name . '-public',
 		    'cwragc',
 		    array(
@@ -116,7 +116,7 @@ class CWRA_Google_Charts_Public {
 
 		wp_enqueue_script( $this->plugin_name . 'googlecharts',
 		    'https://www.gstatic.com/charts/loader.js',
-		    array(), $this->version, false );
+		    array(), $this->version, true );
 
 	}
 
